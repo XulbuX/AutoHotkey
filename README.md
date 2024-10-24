@@ -131,8 +131,8 @@ Here, it will replace defined text with other text:
 Then there's a bunch of special text characters, you can type, which I won't list all here, but you can find them all the way at the bottom in the AHK file. Here's a few examples:
 | will get replaced | replaced with | instant or not |
 | ----------------- | ------------- | -------------- |
-| `=#`              | `≠`           | ***N:*** *write a non-text character after to make it get replaced* |
-| `==#`             | `≈`           | ***I:*** *will instantly get replaced* |
+| `=#`              | `≠`           | ***N:*** *write a non-text character after to make it get replaced* |
+| `==#`             | `≈`           | ***I:*** *will instantly get replaced* |
 | `micro#`          | `µ`           | ***I***        |
 | `permille#`       | `‱`          | ***I***        |
 | `3/4#`            | `¾`           | ***I***        |

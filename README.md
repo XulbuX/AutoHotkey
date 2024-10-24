@@ -104,23 +104,23 @@ This will add more keyboard combinations to write more than the default special 
 
 | Keyboard Combination      | will write             |
 | ------------------------- | ---------------------- |
-| `AltGr + T`               | ™                      |
-| `AltGr + C`               | ©                      |
-| `AltGr + R`               | ®                      |
-| `AltGr + .`               | ·                      |
-| `AltGr + Shift + .`       | •                      |
-| `AltGr + -`               | –                      |
-| `AltGr + Shift + -`       | ±                      |
-| `AltGr + Shift + 7`       | ÷                      |
-| `AltGr + X`               | ×                      |
-| `AltGr + P`               | ¶                      |
+| `AltGr + T`               | `™`                    |
+| `AltGr + C`               | `©`                    |
+| `AltGr + R`               | `®`                    |
+| `AltGr + .`               | `·`                    |
+| `AltGr + Shift + .`       | `•`                    |
+| `AltGr + -`               | `–`                    |
+| `AltGr + Shift + -`       | `±`                    |
+| `AltGr + Shift + 7`       | `÷`                    |
+| `AltGr + X`               | `×`                    |
+| `AltGr + P`               | `¶`                    |
 | `AltGr + Space`           | ` ` (*large space*)   |
-| `AltGr + Shift + Space`   | █                      |
+| `AltGr + Shift + Space`   | `█`                    |
 | `Ctrl + Shift + Space`    | `	` (*tab char*)      |
-| `Alt + -`                 | ─                      |
-| `Alt + Shift + -`         | ━                      |
-| `Alt + <`                 | │                      |
-| `Alt + Shift + <`         | ┃                      |
+| `Alt + -`                 | `─`                    |
+| `Alt + Shift + -`         | `━`                    |
+| `Alt + <`                 | `│`                    |
+| `Alt + Shift + <`         | `┃`                    |
 
 ### Replace Text
 Here, it will replace defined text with other text:
@@ -131,11 +131,11 @@ Here, it will replace defined text with other text:
 Then there's a bunch of special text characters, you can type, which I won't list all here, but you can find them all the way at the bottom in the AHK file. Here's a few examples:
 | will get replaced | replaced with | instant or not |
 | ----------------- | ------------- | -------------- |
-| `=#`              | ≠             | ***N:*** *write a non-text character after to make it get replaced* |
-| `==#`             | ≈             | ***I:*** *will instantly get replaced* |
-| `micro#`          | µ             | ***I***        |
-| `permille#`       | ‱            | ***I***        |
-| `3/4#`            | ¾             | ***I***        |
-| `->###`           | ➜             | ***N***        |
-| `=##`             | ╣║╗╝╚╔╩╦╠═╬   | ***N***        |
+| `=#`              | `≠`           | ***N:*** *write a non-text character after to make it get replaced* |
+| `==#`             | `≈`           | ***I:*** *will instantly get replaced* |
+| `micro#`          | `µ`           | ***I***        |
+| `permille#`       | `‱`          | ***I***        |
+| `3/4#`            | `¾`           | ***I***        |
+| `->###`           | `➜`           | ***N***        |
+| `=##`             | `╣║╗╝╚╔╩╦╠═╬` | ***N***        |
 | ...               |               |                |

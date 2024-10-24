@@ -72,9 +72,9 @@ It's no ordinary auto clicker though, this auto clicker works differently:
 * Press `Shift + Ecs` to enable/disable the auto clicker.
 
 ### Code Operations
-* `Ctrl + Shift + U`, converts the selected to all uppercase.
-* `Ctrl + Shift + L`, converts the selected to all lowercase.
-* `Ctrl + Shift + S`, will web search for the selected text.
+* `Ctrl + Shift + U` converts the selected to all uppercase.
+* `Ctrl + Shift + L` converts the selected to all lowercase.
+* `Ctrl + Shift + S` will web search for the selected text.
 
 ### Lock PC
 * `Win + <` to lock the PC.

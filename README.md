@@ -126,6 +126,7 @@ This will add more keyboard combinations to write more than the default special 
 
 ### Replace Text
 Here, it will replace defined text with other text:
+| ----- | ------------------------ |
 | `@@e` | `your.email@example.com` (*can be replaced with your real email in the AHK file*) |
 | `FL#` | `Firstname Lastname` (*can be replaced with your real name in the AHK file*) |
 | `fl#` | `firstname.lastname` (*can be replaced with your real name in the AHK file*) |

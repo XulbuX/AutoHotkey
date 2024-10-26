@@ -137,6 +137,8 @@ Then there's a bunch of special text characters, you can type, which I won't lis
 | `micro#`          | `µ`           | **I**          |
 | `permille#`       | `‱`          | **I**          |
 | `3/4#`            | `¾`           | **I**          |
+| `->#`             | `→`           | **N**          |
+| `->##`            | `⇾`           | **N**          |
 | `->###`           | `➜`           | **N**          |
 | `=##`             | `╣║╗╝╚╔╩╦╠═╬` | **N**          |
 | ...               |               |                |

@@ -1,5 +1,6 @@
 # AutoHotkey
 This repository contains AutoHotkey (*AHK*) scripts, which do a lot of really cool and very useful things.
+For more information on AutoHotkey, how to use it and how to write AHK scripts, check out the [AutoHotkey documentation](https://www.autohotkey.com/docs/v2).
 
 > [!NOTE]
 > Most of the scripts in this repo only work for Windows, still the functionalities, that don't rely on Windows specific things, might work on other OSes too.

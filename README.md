@@ -63,7 +63,7 @@ Name=AutoHotkey Script
 
 ## <span id="xulbux-ahk">XulbuX AHK</span>
 This is the main AHK file, which includes all the functionalities you need, in one single script.<br>
-⇾ You can easily customize shortcuts, text replacements and everything else in the code.
+⇾ You can easily customize shortcuts, text replacements and everything else in the code.<br>
 ⇾ You can also easily copy and paste existing parts of the code to add more shortcuts, text replacements, etc.
 
 ### Auto Clicker

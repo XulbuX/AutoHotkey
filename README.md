@@ -62,9 +62,8 @@ Name=AutoHotkey Script
 
 
 ## <span id="xulbux-ahk">XulbuX AHK</span>
-This is the main AHK file, which includes all the functionalities you need, in one single script.
-
-You can easily customize shortcuts and everything else in the code.
+This is the main AHK file, which includes all the functionalities you need, in one single script.<br>
+⇾ You can easily customize shortcuts and everything else in the code.
 
 ### Auto Clicker
 That's right, this script contains an auto clicker!

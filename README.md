@@ -135,10 +135,11 @@ Then there's a bunch of special text characters, you can type, which I won't lis
 | `=#`              | `≠`           | **N:** write a non-text character after to make it get replaced |
 | `==#`             | `≈`           | **I:** will instantly get replaced |
 | `micro#`          | `µ`           | **I**          |
+| `permil#`         | `‰`           | **I**          |
 | `permille#`       | `‱`          | **I**          |
 | `3/4#`            | `¾`           | **I**          |
 | `->#`             | `→`           | **N**          |
-| `->##`            | `⇾`           | **N**          |
-| `->###`           | `➜`           | **N**          |
+| `->##`            | `⇾`          | **N**          |
+| `->###`           | `➜`          | **N**          |
 | `=##`             | `╣║╗╝╚╔╩╦╠═╬` | **N**          |
 | ...               |               |                |

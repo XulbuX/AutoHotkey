@@ -126,22 +126,23 @@ This will add more keyboard combinations to write more than the default special 
 
 ### Replace Text
 Here, it will replace defined text with other text:
-| ----- | ------------------------ |
-| `@@e` | `your.email@example.com` (*can be replaced with your real email in the AHK file*) |
-| `FL#` | `Firstname Lastname` (*can be replaced with your real name in the AHK file*) |
-| `fl#` | `firstname.lastname` (*can be replaced with your real name in the AHK file*) |
+| gets replaced | replaced with        |
+| ------------- | -------------------- |
+| `@@e`         | `email@example.com` (*can be replaced with your real email in the AHK file*) |
+| `FL#`         | `Firstname Lastname` (*can be replaced with your real name in the AHK file*) |
+| `fl#`         | `firstname.lastname` (*can be replaced with your real name in the AHK file*) |
 
 Then there's a bunch of special text characters, you can type, which I won't list all here, but you can find them all the way at the bottom in the AHK file. Here's a few examples:
-| will get replaced | replaced with | instant or not |
-| ----------------- | ------------- | -------------- |
-| `=#`              | `≠`           | **N:** write a non-text character after to make it get replaced |
-| `==#`             | `≈`           | **I:** will instantly get replaced |
-| `micro#`          | `µ`           | **I**          |
-| `permil#`         | `‰`           | **I**          |
-| `permille#`       | `‱`          | **I**          |
-| `3/4#`            | `¾`           | **I**          |
-| `->#`             | `→`           | **N**          |
-| `->##`            | `⇾`          | **N**          |
-| `->###`           | `➜`          | **N**          |
-| `=##`             | `╣║╗╝╚╔╩╦╠═╬` | **N**          |
-| ...               |               |                |
+| gets replaced | replaced with | instant or not |
+| ------------- | ------------- | -------------- |
+| `=#`          | `≠`           | **N:** write a non-text character after to make it get replaced |
+| `==#`         | `≈`           | **I:** will instantly get replaced |
+| `micro#`      | `µ`           | **I**          |
+| `permil#`     | `‰`           | **I**          |
+| `permille#`   | `‱`          | **I**          |
+| `3/4#`        | `¾`           | **I**          |
+| `->#`         | `→`           | **N**          |
+| `->##`        | `⇾`           | **N**          |
+| `->###`       | `➜`           | **N**          |
+| `=##`         | `╣║╗╝╚╔╩╦╠═╬` | **N**          |
+| ...           |               |                |

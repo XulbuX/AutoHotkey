@@ -299,7 +299,7 @@ $#!c::{
 ;  :*:  for instant replacement (no need to press space, enter, etc.)
 
 ; EMAIL SHORTCUTS
-:*:@@e::your.email@example.com
+:*:@@e::email@example.com
 
 ; NAME SHORTCUTS (CASE SENSITIVE)
 :*C:FL#::Firstname Lastname

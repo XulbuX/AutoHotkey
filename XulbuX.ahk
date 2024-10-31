@@ -107,8 +107,7 @@ global autoClickerOn := false ; INIT: `false` = NOT ACTIVE
 ; CONVERT SELECTED TEXT TO UPPERCASE
 ^+u::{
   selectedText := GetSelectedText()
-  if (selectedText != "")
-  {
+  if selectedText {
     PasteText(StrUpper(selectedText))
   }
 }
@@ -116,17 +115,25 @@ global autoClickerOn := false ; INIT: `false` = NOT ACTIVE
 ; CONVERT SELECTED TEXT TO LOWERCASE
 ^+l::{
   selectedText := GetSelectedText()
-  if (selectedText != "")
-  {
+  if selectedText {
     PasteText(StrLower(selectedText))
   }
 }
 
-; WEBSEARCH SELECTED TEXT
+; OPEN SELECTED TEXT AS WEBSITE/URL
 ^+s::{
   selectedText := GetSelectedText()
-  if (selectedText)
+  if selectedText {
+    Run(selectedText)
+  }
+}
+
+; WEBSEARCH SELECTED TEXT
+^!s::{
+  selectedText := GetSelectedText()
+  if selectedText {
     Run("https://www.google.com/search?q=" . selectedText)
+  }
 }
 
 

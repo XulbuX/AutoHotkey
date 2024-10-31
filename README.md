@@ -77,7 +77,8 @@ It's no ordinary auto clicker though, this auto clicker works differently:
 ### Code Operations
 * `Ctrl + Shift + U` converts the selected to all uppercase.
 * `Ctrl + Shift + L` converts the selected to all lowercase.
-* `Ctrl + Shift + S` will web search for the selected text.
+* `Ctrl + Shift + S` will open the selected text as website/URL.
+* `Ctrl + Alt + S` will web search for the selected text.
 
 ### Lock PC
 * `Win + <` to lock the PC.

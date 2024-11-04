@@ -75,8 +75,10 @@ It's no ordinary auto clicker though, this auto clicker works differently:
 * Press `Shift + Ecs` to enable/disable the auto clicker.
 
 ### Code Operations
-* `Ctrl + Shift + U` converts the selected to all uppercase.
-* `Ctrl + Shift + L` converts the selected to all lowercase.
+* `Ctrl + Shift + U` converts the selected to all uppercase:<br>
+  If you want to convert text with linebreaks to uppercase, coy that text and then press `Ctrl + Shift + U`. If you now paste the text again, it will be all uppercase.
+* `Ctrl + Shift + L` converts the selected to all lowercase:<br>
+  If you want to convert text with linebreaks to lowercase, coy that text and then press `Ctrl + Shift + L`. If you now paste the text again, it will be all lowercase.
 * `Ctrl + Shift + S` will open the selected text as website/URL.
 * `Ctrl + Alt + S` will web search for the selected text.
 

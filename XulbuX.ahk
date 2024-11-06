@@ -121,9 +121,12 @@ global autoClickerOn := false ; INIT: `false` = NOT ACTIVE
 }
 
 ; OPEN SELECTED TEXT AS WEBSITE/URL
-^+s::{
+^+s::{ 
   selectedText := GetSelectedText()
   if selectedText {
+    if !RegExMatch(selectedText, "^https?://") {
+      selectedText := "https://" selectedText
+    }
     Run(selectedText)
   }
 }

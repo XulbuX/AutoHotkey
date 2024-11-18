@@ -480,6 +480,8 @@ $#!c::{
 :*:star#::⭐
 :*:sparkles#::✨
 :*:zap#::⚡
+:*:pass::✓
+:*:fail::⨯
 :*:checkmark#::✅
 :*:crossmark#::❌
 :*:question#::❓

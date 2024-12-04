@@ -482,6 +482,8 @@ $#!c::{
 :*:zap#::⚡
 :*:pass#::✓
 :*:fail#::⨯
+:*:check#::✓
+:*:cross#::⨯
 :*:checkmark#::✅
 :*:crossmark#::❌
 :*:question#::❓

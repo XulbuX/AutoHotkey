@@ -309,7 +309,7 @@ $#!c::{
 ;  :*:  for instant replacement (no need to press space, enter, etc.)
 
 ; EMAIL SHORTCUTS
-:*:@@e::email@example.com
+:*:@@m::email@example.com
 
 ; NAME SHORTCUTS (CASE SENSITIVE)
 :*C:FL#::Firstname Lastname
@@ -400,10 +400,10 @@ $#!c::{
 ::"##::‹›
 ::"###::“”
 ::"####::‘’
-::*#::∗
 :*:***#::⁂
-::..#::‥
+::*#::∗
 :*:...#::…
+::..#::‥
 ::?#::¿
 ::!#::¡
 :*:!!#::‼
@@ -467,33 +467,208 @@ $#!c::{
 :*:cent#::¢
 :*:rupee#::₹
 
-; EMOJI AND ICONS
-:*:smile#::😊
-:*:sad#::😢
-:*:laugh#::😂
-:*:wink#::😉
-:*:thumbsup#::👍
-:*:thumbsdown#::👎
-:*:okhand#::👌
-:*:clap#::👏
-:*:fire#::🔥
-:*:star#::⭐
-:*:sparkles#::✨
-:*:zap#::⚡
-:*:pass#::✓
-:*:fail#::⨯
-:*:check#::✓
-:*:cross#::⨯
-:*:checkmark#::✅
-:*:crossmark#::❌
-:*:question#::❓
-:*:exclamation#::❗
-:*:bulb#::💡
-:*:lock#::🔒
-:*:unlock#::🔓
-:*:key#::🔑
-:*:hammer#::🔨
-:*:wrench#::🔧
-:*:gear#::⚙️
-:*:paperclip#::📎
-:*:link#::🔗
+; GENERAL SPECIAL CHARACTERS
+:*:(pass|check)#::✓
+:*:(fail|cross)#::⨯
+
+; EMOJIS
+; FEELINGS / EMOTIONS
+:*:(smile|happy|cheerful)#::😊
+:*:(laugh|lol|haha)#::😄
+:*:(joy|rofl|xd)#::😂
+:*:(wink|flirt)#::😉
+:*:(joke|joking)::🙃
+:*:(love_face|heart_eyes|inlove)#::😍
+:*:(kiss|mwah|xoxo)#::😘
+:*:(romance|love|in_love)::🥰
+:*:(kiss_heart|smooch|muah)#::💋
+:*:(blush|shy|uwu)#::☺️
+:*:(cool|sunglasses|awesome)#::😎
+:*:(perfect|ok|okay|good)#::👌
+:*:(drool|yummy|tasty)#::🤤
+:*:(relief|phew|sweat)#::😅
+:*:(tongue|silly|playful)#::😛
+:*:(crazy|zany|goofy)#::🤪
+:*:(sus|suspicious|aha)::😏
+:*:(party|celebrate|woohoo)#::🥳
+:*:(star_struck|amazed|wow)#::🤩
+:*:(mindblown|explode|boom)#::🤯
+:*:(flabbergasted|shocked)::😨
+:*:(loud|vibrate|vibrating)::🫨
+:*:(dizzy|stunned)::😵‍💫
+:*:(dead|finished)::😵
+:*:(think|thinking|hmm)#::🤔
+:*:(monocle|inspect|examine)#::🧐
+:*:(nerd|geek|smart)#::🤓
+:*:(stupid|dumb)#::🥴
+:*:(shrug|dunno|whatever|idk)#::🤷
+:*:(facepalm|smh|doh)#::🤦
+:*:(eyes|look|peek)#::👀
+:*:(sad|cry|tear)#::😢
+:*:(sob|weep|bawl)#::😭
+:*:(angry|mad|rage)#::😠
+:*:(furious|outrage|fury)#::🤬
+:*:(tired|exhausted|weary)#::😫
+:*:(worried|concerned|anxious)#::😟
+:*:(icecold|freezing|frozen)#::🥶
+:*:(sick|ill|nauseous)#::🤢
+:*:(virus|microbe|sickness|infection)::🦠
+:*:(rip|skull)#::💀
+:*:(crossbones|deadly)#::☠️
+:*:(ghost|ghosted|spooky|boo)#::👻
+:*:(poop|crap|shit|bad)#::💩
+:*:(moai|stone_face|bruh)::🗿
+; GESTURES
+:*:(thumbsup|like|upvote)#::👍
+:*:(thumbsdown|dislike|downvote)#::👎
+:*:(clap|applause|bravo)#::👏
+:*:(pray|please|thank)#::🙏
+:*:(muscle|strong|flex)#::💪
+:*:(punch|fist|bro)#::👊
+:*:(point_up|above|up)#::☝️
+:*:(point_down|below|down)#::👇
+:*:(handshake|deal|agreement)#::🤝
+:*:(fingers_crossed|luck|hope)#::🤞
+:*:(peace|victory|yeah)#::✌️
+; TECH & DEVELOPER
+:*:(keyboard|type|input)#::⌨️
+:*:(computer|pc|desktop)#::💻
+:*:(terminal|console|shell|cmd)#::📟
+:*:(programmer|dev|coder)#::👨‍💻
+:*:(robot|bot|auto)#::🤖
+:*:(rocket|deploy|launch)#::🚀
+:*:(execute|start|run|play)#::▶️
+:*:(refresh|reload|sync|update)#::🔄
+:*:(wifi|wireless|signal|network)#::📶
+:*:(download|down|save)#::⏬
+:*:(upload|up|push)#::⏫
+:*:(stop|halt|terminate)#::⏹️
+:*:(pause|wait|suspend)#::⏸️
+:*:(zap|lightning|fast)#::⚡
+:*:(cloud|server|host)#::☁️
+:*:(database|db|storage)#::🗄️
+:*:(save|diskette|store)#::💾
+:*:(folder|dir|directory|files)#::📂
+:*:(files|documents|docs)::🗃️
+:*:(file|document|doc)#::📄
+:*:(magnify|search|find)#::🔍
+:*:(web|browser|internet|www)#::🌐
+:*:(link|url|href|hyperlink)#::🔗
+:*:(graph|chart|stats|data)#::📊
+:*:(clipboard|paste|copy)#::📋
+:*:(tasks|todo|list|texteditor|editor|notepad)#::📝
+:*:(locked|secure|secret|private)#::🔒
+:*:(lock|unlock|passwords|password_manager|pwd_manager|safe)::🔐
+:*:(unlocked|open|free)#::🔓
+:*:(key|passkey|password|pwd|pin|access)#::🔑
+:*:(gear|settings|config|options)#::⚙️
+:*:(tools|setup|maintenance)#::🛠️
+:*:(recycling_bin|bin|trash|delete)::🗑️
+:*:(testing|test|quality)::🧪
+:*:(noentry|noaccess)::⛔
+:*:(prohibited|ban|stop|forbidden)::🚫
+:*:(uranium|radioactive|radioactivity)::☢️
+:*:(biohazard|toxic|poison)::☣️
+:*:(warn|warning|alert|caution|danger|dangerous)#::⚠️
+:*:(virus|malware|trojan)::👾
+:*:(shield|security|protect|antivirus)#::🛡️
+; DESIGN & CREATIVE
+:*:(palette|colors|art)#::🎨
+:*:(pencil|draw|edit)#::✏️
+:*:(brush|paint|design)#::🖌️
+:*:(ruler|measure|size)#::📏
+:*:(frames|image|picture)#::🖼️
+:*:(camera|photo|capture)#::📸
+:*:(video|film|movie)#::🎥
+:*:(sparkles|magic|shine)#::✨
+:*:(layers|stack|arrange)#::🗂️
+; ANIMALS
+:*:(bug|debug|error)#::🪲
+:*:(python|snake|serpent)::🐍
+:*:(dog|puppy|doggy)#::🐶
+:*:(cat|kitty|meow)#::🐱
+:*:(mouse|rat|rodent)#::🐭
+:*:(monkey|ape|chimp)#::🐵
+:*:(bear|grizzly|teddy)#::🐻
+:*:(golang|gopher)#::🦫
+:*:(unicorn|fantasy|magic)#::🦄
+:*:(butterfly|moth|insect)#::🦋
+:*:(bird|birdie|avian)#::🐦
+:*:(fox|mozilla|firefox)#::🦊
+:*:(penguin|linux|tux)#::🐧
+:*:(whale|docker|container)#::🐳
+:*:(spider|arachnid)#::🕷️
+; SYMBOLS & MARKS
+:*:(checkmark|correct|verified)#::✅
+:*:(crossmark|wrong|incorrect)#::❌
+:*:(question|what|huh)#::❓
+:*:(exclaim|attention|alert)#::❗
+:*:(star|favorite|favourite|bookmark)#::⭐
+:*:(copyright|copy|rights)#::©️
+:*:(trademark|tm|brand)#::™️
+:*:(registered|reg|brand)#::®️
+:*:(plus|add|new)#::➕
+:*:(minus|subtract|remove)#::➖
+:*:(multiply|times|x)#::✖️
+:*:(divide|division|slash)#::➗
+:*:(equals|equal|result)#::🟰
+:*:(infinite|forever|endless)#::♾️
+:*:(hundred|percent|score|nice)#::💯
+; OBJECTS & TOOLS
+:*:(phone|mobile|cell)#::📱
+:*:(mail|email|message)#::📧
+:*:(bulb|idea|light)#::💡
+:*:(money|cash|dollar)#::💰
+:*:(wrench|fix|repair)#::🔧
+:*:(hammer|build|construct)#::🔨
+:*:(paperclip|pyperclip|attach|clip)#::📎
+:*:(link|chain|url)#::🔗
+:*:(save|marker|tag)#::🔖
+:*:(memo|note|write)#::📝
+:*:(printer|print|output)#::🖨️
+:*:(floppy|disk|save)#::💾
+:*:(cd|dvd|disc)#::💿
+; COMMUNICATION & SOCIAL
+:*:(chat|speech|comment)#::💬
+:*:(globe|world|internet)#::🌐
+:*:(signal|wifi|wireless)#::📶
+:*:(bell|notify|notification)#::🔔
+:*:(mute|silent|quiet)#::🔕
+:*:(inbox|received|messages)#::📥
+:*:(outbox|sent|sending)#::📤
+; HEARTS & LOVE
+:*:(red_heart|heart|red)#::❤️
+:*:(orange_heart|warm|sunset)#::🧡
+:*:(yellow_heart|friendship|sunny)#::💛
+:*:(green_heart|nature|life)#::💚
+:*:(blue_heart|calm|ocean)#::💙
+:*:(purple_heart|royal|noble)#::💜
+:*:(pink_heart|sweet|cute)#::🩷
+:*:(black_heart|dark|night)#::🖤
+:*:(heartbreak|broken|hurt)#::💔
+:*:(sparks|excited|crush)#::💖
+:*:(fire_heart|passion|desire)#::❤️‍🔥
+; WEATHER & NATURE
+:*:(sun|sunshine|bright)#::☀️
+:*:(cloudy|weather)#::☁️
+:*:(rain|rainy|wet)#::🌧️
+:*:(rainbow|pride|colors)#::🌈
+:*:(fire|flame|burn)#::🔥
+:*:(tree|forest|plant)#::🌳
+:*:(flower|blossom|bloom)#::🌸
+:*:(snowflake|winter)#::❄️
+:*:(ice|ice_cube|freeze)::🧊
+:*:(leaf|leafy|green)#::🍃
+:*:(rock|stone|rocky)#::🪨
+; TIME MANAGEMENT
+:*:(clock|time|hour)#::🕐
+:*:(hourglass|timer|wait)#::⌛
+:*:(calendar|date|schedule)#::📅
+:*:(alarm|reminder|wake)#::⏰
+:*:(stopwatch|measure|timing)#::⏱️
+; ACHIEVEMENTS
+:*:(trophy|win|champion)#::🏆
+:*:(medal|prize|award)#::🏅
+:*:(crown|royal|leader)#::👑
+:*:(diamond|gem|jewel)#::💎
+:*:(target|aim|goal)#::🎯

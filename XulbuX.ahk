@@ -453,8 +453,8 @@ $#!c:: {
 :*:rupee#::₹
 
 ; GENERAL SPECIAL CHARACTERS
-:*:(pass|check)#::✓
-:*:(fail|cross)#::⨯
+:*?:(pass|check)#::✓
+:*?:(fail|cross)#::⨯
 
 ; EMOJIS
 ; FEELINGS / EMOTIONS
@@ -462,10 +462,10 @@ $#!c:: {
 :*:(laugh|lol|haha)#::😄
 :*:(joy|rofl|xd)#::😂
 :*:(wink|flirt)#::😉
-:*:(joke|joking)::🙃
+:*:(joke|joking)#::🙃
 :*:(love_face|heart_eyes|inlove)#::😍
 :*:(kiss|mwah|xoxo)#::😘
-:*:(romance|love|in_love)::🥰
+:*:(romance|love|in_love)#::🥰
 :*:(kiss_heart|smooch|muah)#::💋
 :*:(blush|shy|uwu)#::☺️
 :*:(cool|sunglasses|awesome)#::😎
@@ -474,14 +474,14 @@ $#!c:: {
 :*:(relief|phew|sweat)#::😅
 :*:(tongue|silly|playful)#::😛
 :*:(crazy|zany|goofy)#::🤪
-:*:(sus|suspicious|aha)::😏
+:*:(sus|suspicious|aha)#::😏
 :*:(party|celebrate|woohoo)#::🥳
 :*:(star_struck|amazed|wow)#::🤩
 :*:(mindblown|explode|boom)#::🤯
-:*:(flabbergasted|shocked)::😨
-:*:(loud|vibrate|vibrating)::🫨
-:*:(dizzy|stunned)::😵‍💫
-:*:(dead|finished)::😵
+:*:(flabbergasted|shocked)#::😨
+:*:(loud|vibrate|vibrating)#::🫨
+:*:(dizzy|stunned)#::😵‍💫
+:*:(dead|finished)#::😵
 :*:(think|thinking|hmm)#::🤔
 :*:(monocle|inspect|examine)#::🧐
 :*:(nerd|geek|smart)#::🤓
@@ -502,7 +502,7 @@ $#!c:: {
 :*:(crossbones|deadly)#::☠️
 :*:(ghost|ghosted|spooky|boo)#::👻
 :*:(poop|crap|shit|bad)#::💩
-:*:(moai|stone_face|bruh)::🗿
+:*:(moai|stone_face|bruh)#::🗿
 ; GESTURES
 :*:(thumbsup|like|upvote)#::👍
 :*:(thumbsdown|dislike|downvote)#::👎
@@ -534,7 +534,7 @@ $#!c:: {
 :*:(database|db|storage)#::🗄️
 :*:(save|diskette|store)#::💾
 :*:(folder|dir|directory|files)#::📂
-:*:(files|documents|docs)::🗃️
+:*:(files|documents|docs)#::🗃️
 :*:(file|document|doc)#::📄
 :*:(magnify|search|find)#::🔍
 :*:(web|browser|internet|www)#::🌐
@@ -543,21 +543,21 @@ $#!c:: {
 :*:(clipboard|paste|copy)#::📋
 :*:(tasks|todo|list|editor|notepad)#::📝
 :*:(locked|secure|secret|private)#::🔒
-:*:(lock|unlock|passwords|safe)::🔐
-:*:(password_manager|pwd_manager)::🔐
+:*:(lock|unlock|passwords|safe)#::🔐
+:*:(password_manager|pwd_manager)#::🔐
 :*:(unlocked|open|free)#::🔓
 :*:(key|passkey|password|pwd|pin|access)#::🔑
 :*:(gear|settings|config|options)#::⚙️
 :*:(tools|setup|maintenance)#::🛠️
-:*:(recycling_bin|bin|trash|delete)::🗑️
-:*:(testing|test|quality)::🧪
-:*:(noentry|noaccess)::⛔
-:*:(prohibited|ban|stop|forbidden)::🚫
-:*:(uranium|radioactive|radioactivity)::☢️
-:*:(biohazard|toxic|poison)::☣️
+:*:(recycling_bin|bin|trash|delete)#::🗑️
+:*:(testing|test|quality)#::🧪
+:*:(noentry|noaccess)#::⛔
+:*:(prohibited|ban|stop|forbidden)#::🚫
+:*:(uranium|radioactive|radioactivity)#::☢️
+:*:(biohazard|toxic|poison)#::☣️
 :*:(warn|warning|caution)#::⚠️
 :*:(alert|danger|dangerous)#::⚠️
-:*:(virus|malware|trojan)::👾
+:*:(virus|malware|trojan)#::👾
 :*:(shield|security|protect|antivirus)#::🛡️
 ; DESIGN & CREATIVE
 :*:(palette|colors|art)#::🎨
@@ -571,7 +571,7 @@ $#!c:: {
 :*:(layers|stack|arrange)#::🗂️
 ; ANIMALS
 :*:(bug|debug|error)#::🪲
-:*:(python|snake|serpent)::🐍
+:*:(python|snake|serpent)#::🐍
 :*:(dog|puppy|doggy)#::🐶
 :*:(cat|kitty|meow)#::🐱
 :*:(mouse|rat|rodent)#::🐭

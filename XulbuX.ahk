@@ -10,154 +10,146 @@
 ;########## SPECIAL TEXT ##########
 ;  {Enter}  or  `n  for return
 
-
-
 ;######################################## GENERAL FUNCTIONS AND VARIABLES ########################################
 
 USER := EnvGet("USERNAME")
 
 GetSelectedText() {
-  ClipSaved := ClipboardAll()
-  SendEvent "^c"
-  SelectedText := StrReplace(A_Clipboard, "/", "\")
-  A_Clipboard := ClipSaved
-  return SelectedText
+    ClipSaved := ClipboardAll()
+    SendEvent "^c"
+    SelectedText := StrReplace(A_Clipboard, "/", "\")
+    A_Clipboard := ClipSaved
+    return SelectedText
 }
 
 GetSelectedFile() {
-  shell := ComObject("Shell.Application")
-  for window in shell.Windows {
-    if (window.HWND = WinGetID("A")) {
-      selectedItems := window.Document.SelectedItems
-      if (selectedItems.Count > 0) {
-        return selectedItems.Item(0).Path
-      }
+    shell := ComObject("Shell.Application")
+    for window in shell.Windows {
+        if (window.HWND = WinGetID("A")) {
+            selectedItems := window.Document.SelectedItems
+            if (selectedItems.Count > 0) {
+                return selectedItems.Item(0).Path
+            }
+        }
     }
-  }
-  return ""
+    return ""
 }
 
 GetExplorerPath() {
-  shell := ComObject("Shell.Application")
-  for window in shell.Windows {
-    if (window.HWND = WinGetID("A")) {
-      return window.Document.Folder.Self.Path
+    shell := ComObject("Shell.Application")
+    for window in shell.Windows {
+        if (window.HWND = WinGetID("A")) {
+            return window.Document.Folder.Self.Path
+        }
     }
-  }
-  return ""
+    return ""
 }
 
 EnvReplace(path) {
-  pos := 1
-  while (pos := RegExMatch(path, "i)%(\w+)%", &match, pos)) {
-    envVal := EnvGet(match[1])
-    if (envVal)
-      path := StrReplace(path, match[0], envVal)
-    pos += StrLen(match[0])
-  }
-  return path
+    pos := 1
+    while (pos := RegExMatch(path, "i)%(\w+)%", &match, pos)) {
+        envVal := EnvGet(match[1])
+        if (envVal)
+            path := StrReplace(path, match[0], envVal)
+        pos += StrLen(match[0])
+    }
+    return path
 }
 
 PasteText(text) {
-  A_Clipboard := text
-  SendInput("^v")
-  return text
+    A_Clipboard := text
+    SendInput("^v")
+    return text
 }
-
-
 
 ;######################################## AUTOCLICKER ########################################
 
 global autoClickerOn := false ; INIT: `false` = NOT ACTIVE
 
-+Esc::{
-  global
-  autoClickerOn := !autoClickerOn
-  if (autoClickerOn)
-    ToolTip("AutoClicker ON")
-  else
-    ToolTip("AutoClicker OFF")
-  SetTimer () => ToolTip(), -600
++Esc:: {
+    global
+    autoClickerOn := !autoClickerOn
+    if (autoClickerOn)
+        ToolTip("AutoClicker ON")
+    else
+        ToolTip("AutoClicker OFF")
+    SetTimer () => ToolTip(), -600
 }
 
-~$LButton::{
-  global
-  if (autoClickerOn) {
-    KeyWait("LButton", "T0.5")
-    if (A_TimeIdleKeyboard > 500)
-      while (GetKeyState("LButton", "P"))
-        Click()
-  }
+~$LButton:: {
+    global
+    if (autoClickerOn) {
+        KeyWait("LButton", "T0.5")
+        if (A_TimeIdleKeyboard > 500)
+            while (GetKeyState("LButton", "P"))
+                Click()
+    }
 }
 
-~$RButton::{
-  global
-  if (autoClickerOn) {
-    KeyWait("RButton", "T0.5")
-    if (A_TimeIdleKeyboard > 500)
-      while (GetKeyState("RButton", "P"))
-        Click()
-  }
+~$RButton:: {
+    global
+    if (autoClickerOn) {
+        KeyWait("RButton", "T0.5")
+        if (A_TimeIdleKeyboard > 500)
+            while (GetKeyState("RButton", "P"))
+                Click()
+    }
 }
-
-
 
 ;######################################## CODE OPERATIONS ########################################
 
 ; CONVERT SELECTED TEXT TO UPPERCASE
-^+u::{
-  selectedText := GetSelectedText()
-  if selectedText {
-    PasteText(StrUpper(selectedText))
-  }
+^+u:: {
+    selectedText := GetSelectedText()
+    if selectedText {
+        PasteText(StrUpper(selectedText))
+    }
 }
 
 ; CONVERT SELECTED TEXT TO LOWERCASE
-^+l::{
-  selectedText := GetSelectedText()
-  if selectedText {
-    PasteText(StrLower(selectedText))
-  }
+^+l:: {
+    selectedText := GetSelectedText()
+    if selectedText {
+        PasteText(StrLower(selectedText))
+    }
 }
 
 ; OPEN SELECTED TEXT AS WEBSITE/URL
-^+s::{ 
-  selectedText := GetSelectedText()
-  if selectedText {
-    if !RegExMatch(selectedText, "^https?://") {
-      selectedText := "https://" selectedText
+^+s:: {
+    selectedText := GetSelectedText()
+    if selectedText {
+        if !RegExMatch(selectedText, "^https?://") {
+            selectedText := "https://" selectedText
+        }
+        Run(selectedText)
     }
-    Run(selectedText)
-  }
 }
 
 ; WEBSEARCH SELECTED TEXT
-^!s::{
-  selectedText := GetSelectedText()
-  if selectedText {
-    Run("https://www.google.com/search?q=" . selectedText)
-  }
+^!s:: {
+    selectedText := GetSelectedText()
+    if selectedText {
+        Run("https://www.google.com/search?q=" . selectedText)
+    }
 }
-
-
 
 ;######################################## LOCK PC ########################################
 
 ; PRESS WIN+< TO LOCK COMPUTER
-#<::DllCall("LockWorkStation")
+#<:: DllCall("LockWorkStation")
 
 ; PRESS WIN+SHIFT+< TO LOCK COMPUTER ANDPUT COMPUTER TO SLEEP
-#+<::{
+#+<:: {
     ; WAIT FOR THE RELEASE OF THE KEYS
     KeyWait "<", "U"
     KeyWait "LWin", "U"
     KeyWait "Shift", "U"
     ; PUT THE COMPUTER TO SLEEP
-    SendMessage(0x112, 0xF170, 2,, "Program Manager")
+    SendMessage(0x112, 0xF170, 2, , "Program Manager")
 }
 
 ; PRESS WIN+CTRL+< TO LOCK COMPUTER ANDPUT COMPUTER TO HIBERNATE
-#^<::{
+#^<:: {
     ; WAIT FOR THE RELEASE OF THE KEYS
     KeyWait "<", "U"
     KeyWait "LWin", "U"
@@ -166,108 +158,103 @@ global autoClickerOn := false ; INIT: `false` = NOT ACTIVE
     DllCall("PowrProf\SetSuspendState", "int", 1, "int", 0, "int", 0)
 }
 
-
 ;######################################## LAUNCH APPS ########################################
 
 ;########## LAUNCH BROWSER ##########
-launch_browser(dev_mode:=false) {
-  paths := [
-    'C:\Program Files\Google\Chrome Dev\Application\chrome.exe',
-    'C:\Program Files\Google\Chrome\Application\chrome.exe',
-    'C:\Program Files\Mozilla Firefox\firefox.exe',
-    'C:\Program Files\Opera GX\Launcher.exe',
-    'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'
-  ]
-  params := dev_mode ? '--incognito' : ''
-  for path in paths {
-    if FileExist(path) {
-      Run('"' path '" ' params)
-      return
+launch_browser(dev_mode := false) {
+    paths := [
+        'C:\Program Files\Google\Chrome Dev\Application\chrome.exe',
+        'C:\Program Files\Google\Chrome\Application\chrome.exe',
+        'C:\Program Files\Mozilla Firefox\firefox.exe',
+        'C:\Program Files\Opera GX\Launcher.exe',
+        'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'
+    ]
+    params := dev_mode ? '--incognito' : ''
+    for path in paths {
+        if FileExist(path) {
+            Run('"' path '" ' params)
+            return
+        }
     }
-  }
 }
 
-$#!b::launch_browser()
-$#^b::launch_browser(true)
+$#!b:: launch_browser()
+$#^b:: launch_browser(true)
 
 ;########## OPEN SELECTED FILE WITH APP ##########
 ; VisualStudioCode
-$#!v::{
-  winClass := WinGetClass("A")
-  if (winClass = "CabinetWClass" or winClass = "ExploreWClass") {
-      selectedFile := GetSelectedFile()
-      if (selectedFile) {
-          Run "C:\Users\" USER '\AppData\Local\Programs\Microsoft VS Code\Code.exe "' selectedFile '"'
-      } else {
-          Run "C:\Users\" USER "\AppData\Local\Programs\Microsoft VS Code\Code.exe"
-      }
-  } else {
-      Run "C:\Users\" USER "\AppData\Local\Programs\Microsoft VS Code\Code.exe"
-  }
+$#!v:: {
+    winClass := WinGetClass("A")
+    if (winClass = "CabinetWClass" or winClass = "ExploreWClass") {
+        selectedFile := GetSelectedFile()
+        if (selectedFile) {
+            Run "C:\Users\" USER '\AppData\Local\Programs\Microsoft VS Code\Code.exe "' selectedFile '"'
+        } else {
+            Run "C:\Users\" USER "\AppData\Local\Programs\Microsoft VS Code\Code.exe"
+        }
+    } else {
+        Run "C:\Users\" USER "\AppData\Local\Programs\Microsoft VS Code\Code.exe"
+    }
 }
 
 ;########## LAUNCH IN CURRENT DIRECTORY / SELECTED PATH ##########
 ; FileExplorer
-$#e::{
-  if (WinGetClass("A") = "CabinetWClass" or WinGetClass("A") = "ExploreWClass") {
-    currentDir := GetExplorerPath()
-    if (currentDir) {
-      Run('explorer.exe "' currentDir '"')
+$#e:: {
+    if (WinGetClass("A") = "CabinetWClass" or WinGetClass("A") = "ExploreWClass") {
+        currentDir := GetExplorerPath()
+        if (currentDir) {
+            Run('explorer.exe "' currentDir '"')
+        } else {
+            Run("explorer.exe")
+        }
     } else {
-      Run("explorer.exe")
+        selectedText := GetSelectedText()
+        path := EnvReplace(selectedText)
+        if (FileExist(path)) {
+            Run('explorer.exe "' path '"')
+        } else {
+            Run("explorer.exe")
+        }
     }
-  } else {
-    selectedText := GetSelectedText()
-    path := EnvReplace(selectedText)
-    if (FileExist(path)) {
-      Run('explorer.exe "' path '"')
-    } else {
-      Run("explorer.exe")
-    }
-  }
 }
 
 ; WindowsTerminal
-$#!c::{
-  if (WinGetClass("A") = "CabinetWClass" or WinGetClass("A") = "ExploreWClass") {
-    currentDir := GetExplorerPath()
-    if (currentDir) {
-      Run('wt.exe -d "' currentDir '"')
+$#!c:: {
+    if (WinGetClass("A") = "CabinetWClass" or WinGetClass("A") = "ExploreWClass") {
+        currentDir := GetExplorerPath()
+        if (currentDir) {
+            Run('wt.exe -d "' currentDir '"')
+        } else {
+            Run "wt.exe"
+        }
     } else {
-      Run "wt.exe"
+        selectedText := GetSelectedText()
+        path := EnvReplace(selectedText)
+        if (FileExist(path)) {
+            Run('wt.exe -d "' path '"')
+        } else {
+            Run "wt.exe"
+        }
     }
-  } else {
-    selectedText := GetSelectedText()
-    path := EnvReplace(selectedText)
-    if (FileExist(path)) {
-      Run('wt.exe -d "' path '"')
-    } else {
-      Run "wt.exe"
-    }
-  }
 }
-
-
 
 ;######################################## IN-APP OPERATIONS ########################################
 
 ; PRESS CTRL+F2 TO TOGGLE HIDDEN FILES DISPLAY
-^F2::{
-  id := WinExist("A")
-  class := WinGetClass(id)
-  if (class = "CabinetWClass" || class = "ExploreWClass") {
-    rootKey := "HKEY_CURRENT_USER"
-    subKey := "Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
-    hiddenStatus := RegRead(rootKey . "\" . subKey, "Hidden")
-    if (hiddenStatus = 2)
-      RegWrite(1, "REG_DWORD", rootKey . "\" . subKey, "Hidden")
-    else
-      RegWrite(2, "REG_DWORD", rootKey . "\" . subKey, "Hidden")
-    PostMessage(0x111, 41504, , , "ahk_id " id)
-  }
+^F2:: {
+    id := WinExist("A")
+    class := WinGetClass(id)
+    if (class = "CabinetWClass" || class = "ExploreWClass") {
+        rootKey := "HKEY_CURRENT_USER"
+        subKey := "Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
+        hiddenStatus := RegRead(rootKey . "\" . subKey, "Hidden")
+        if (hiddenStatus = 2)
+            RegWrite(1, "REG_DWORD", rootKey . "\" . subKey, "Hidden")
+        else
+            RegWrite(2, "REG_DWORD", rootKey . "\" . subKey, "Hidden")
+        PostMessage(0x111, 41504, , , "ahk_id " id)
+    }
 }
-
-
 
 ;######################################## ADD/REMAP SHORTCUTS ########################################
 
@@ -275,9 +262,7 @@ $#!c::{
 ; !Tab::Return
 
 ; REMAP SHORTCUTS
-^Tab::SendInput("!{Tab}")
-
-
+^Tab:: SendInput("!{Tab}")
 
 ;######################################## MORE KEYBOARD COMBINATIONS ########################################
 
@@ -556,9 +541,10 @@ $#!c::{
 :*:(link|url|href|hyperlink)#::🔗
 :*:(graph|chart|stats|data)#::📊
 :*:(clipboard|paste|copy)#::📋
-:*:(tasks|todo|list|texteditor|editor|notepad)#::📝
+:*:(tasks|todo|list|editor|notepad)#::📝
 :*:(locked|secure|secret|private)#::🔒
-:*:(lock|unlock|passwords|password_manager|pwd_manager|safe)::🔐
+:*:(lock|unlock|passwords|safe)::🔐
+:*:(password_manager|pwd_manager)::🔐
 :*:(unlocked|open|free)#::🔓
 :*:(key|passkey|password|pwd|pin|access)#::🔑
 :*:(gear|settings|config|options)#::⚙️
@@ -569,7 +555,8 @@ $#!c::{
 :*:(prohibited|ban|stop|forbidden)::🚫
 :*:(uranium|radioactive|radioactivity)::☢️
 :*:(biohazard|toxic|poison)::☣️
-:*:(warn|warning|alert|caution|danger|dangerous)#::⚠️
+:*:(warn|warning|caution)#::⚠️
+:*:(alert|danger|dangerous)#::⚠️
 :*:(virus|malware|trojan)::👾
 :*:(shield|security|protect|antivirus)#::🛡️
 ; DESIGN & CREATIVE

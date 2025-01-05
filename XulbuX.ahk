@@ -10,6 +10,8 @@
 ;########## SPECIAL TEXT ##########
 ;  {Enter}  or  `n  for return
 
+
+
 ;######################################## GENERAL FUNCTIONS AND VARIABLES ########################################
 
 USER := EnvGet("USERNAME")
@@ -45,6 +47,22 @@ GetExplorerPath() {
     return ""
 }
 
+Explorer_GetSelected() {
+    selectedItems := []
+    if (hwnd := WinActive("ahk_class CabinetWClass")) {
+        for window in ComObject("Shell.Application").Windows {
+            if (window.HWND == hwnd) {
+                items := window.Document.SelectedItems()
+                loop items.Count {
+                    selectedItems.Push(items.Item(A_Index - 1).Path)
+                }
+                return selectedItems
+            }
+        }
+    }
+    return selectedItems
+}
+
 EnvReplace(path) {
     pos := 1
     while (pos := RegExMatch(path, "i)%(\w+)%", &match, pos)) {
@@ -62,7 +80,38 @@ PasteText(text) {
     return text
 }
 
-;######################################## AUTOCLICKER ########################################
+GetIconPath(icon) {
+    switch icon {
+        case "iconX": return "shell32.dll,110"
+        case "icon?": return "shell32.dll,101"
+        case "icon!": return "shell32.dll,103"
+        case "iconI": return "shell32.dll,109"
+        default: return ""
+    }
+}
+
+CreateGui(title, content, icon := "", button := "") {
+    guiObj := Gui("+AlwaysOnTop")
+    guiObj.SetFont("s10", "Segoe UI")
+    guiObj.Title := title
+    iconControl := ""
+    if icon {
+        iconPath := GetIconPath(icon)
+        if iconPath {
+            guiObj.AddPicture("Icon w32 h32 vIcon", "msctls32.dll,-" iconPath)
+        }
+    }
+    guiObj.AddText("w400 vContent", IsObject(content) ? content[1] : content)
+    if button {
+        guiObj.AddButton("w100 h30 vButton", button)
+    }
+    guiObj.Show("AutoSize Center")
+    return guiObj
+}
+
+
+
+;######################################## AUTO CLICKER ########################################
 
 global autoClickerOn := false ; INIT: `false` = NOT ACTIVE
 
@@ -96,6 +145,8 @@ global autoClickerOn := false ; INIT: `false` = NOT ACTIVE
     }
 }
 
+
+
 ;######################################## CODE OPERATIONS ########################################
 
 ; CONVERT SELECTED TEXT TO UPPERCASE
@@ -125,7 +176,7 @@ global autoClickerOn := false ; INIT: `false` = NOT ACTIVE
     }
 }
 
-; WEBSEARCH SELECTED TEXT
+; WEB-SEARCH SELECTED TEXT
 ^!s:: {
     selectedText := GetSelectedText()
     if selectedText {
@@ -133,12 +184,14 @@ global autoClickerOn := false ; INIT: `false` = NOT ACTIVE
     }
 }
 
+
+
 ;######################################## LOCK PC ########################################
 
 ; PRESS WIN+< TO LOCK COMPUTER
 #<:: DllCall("LockWorkStation")
 
-; PRESS WIN+SHIFT+< TO LOCK COMPUTER ANDPUT COMPUTER TO SLEEP
+; PRESS WIN+SHIFT+< TO LOCK COMPUTER AND PUT COMPUTER TO SLEEP
 #+<:: {
     ; WAIT FOR THE RELEASE OF THE KEYS
     KeyWait "<", "U"
@@ -148,19 +201,22 @@ global autoClickerOn := false ; INIT: `false` = NOT ACTIVE
     SendMessage(0x112, 0xF170, 2, , "Program Manager")
 }
 
-; PRESS WIN+CTRL+< TO LOCK COMPUTER ANDPUT COMPUTER TO HIBERNATE
+; PRESS WIN+CTRL+< TO LOCK COMPUTER AND PUT COMPUTER TO HIBERNATE
 #^<:: {
     ; WAIT FOR THE RELEASE OF THE KEYS
     KeyWait "<", "U"
     KeyWait "LWin", "U"
     KeyWait "Ctrl", "U"
-    ; PUT THE COMPUTER TO HIBETNATE
+    ; PUT THE COMPUTER TO HIBERNATE
     DllCall("PowrProf\SetSuspendState", "int", 1, "int", 0, "int", 0)
 }
+
+
 
 ;######################################## LAUNCH APPS ########################################
 
 ;########## LAUNCH BROWSER ##########
+
 launch_browser(dev_mode := false) {
     paths := [
         'C:\Program Files\Google\Chrome Dev\Application\chrome.exe',
@@ -181,7 +237,9 @@ launch_browser(dev_mode := false) {
 $#!b:: launch_browser()
 $#^b:: launch_browser(true)
 
+
 ;########## OPEN SELECTED FILE WITH APP ##########
+
 ; VisualStudioCode
 $#!v:: {
     winClass := WinGetClass("A")
@@ -197,7 +255,9 @@ $#!v:: {
     }
 }
 
+
 ;########## LAUNCH IN CURRENT DIRECTORY / SELECTED PATH ##########
+
 ; FileExplorer
 $#e:: {
     if (WinGetClass("A") = "CabinetWClass" or WinGetClass("A") = "ExploreWClass") {
@@ -238,9 +298,13 @@ $#!c:: {
     }
 }
 
+
+
 ;######################################## IN-APP OPERATIONS ########################################
 
-; PRESS CTRL+F2 TO TOGGLE HIDDEN FILES DISPLAY
+;########## WINDOWS FILE EXPLORER ##########
+
+; TOGGLE HIDDEN FILES DISPLAY
 ^F2:: {
     id := WinExist("A")
     class := WinGetClass(id)
@@ -256,6 +320,77 @@ $#!c:: {
     }
 }
 
+; ZIP SELECTED FILE(S) / FOLDER CONTENT / FOLDERS
+#HotIf WinActive("ahk_class CabinetWClass")
+^+z:: {
+    selected := Explorer_GetSelected()
+    if (selected.Length = 0) {
+        return
+    }
+    firstItem := selected[1]
+    if (DirExist(firstItem)) {
+        ; FOLDER(S) SELECTED => ZIP USING FIRST FOLDER'S NAME
+        SplitPath(firstItem, &name, &dir)
+        zipFile := name ".zip"
+        zipPath := dir "\" zipFile
+    } else {
+        ; FILE(S) SELECTED => USE FIRST FILE'S NAME WITHOUT EXTENSION
+        SplitPath(firstItem, &name, &dir, &ext)
+        zipFile := StrReplace(name, "." ext) ".zip"
+        zipPath := dir "\" zipFile
+    }
+    ; DELETE EXISTING ZIP FILE (IF EXISTS)
+    if FileExist(zipPath) {
+        FileDelete(zipPath)
+    }
+    ; CREATE EMPTY ZIP FILE
+    zip := FileOpen(zipPath, "w")
+    if (zip) {
+        zip.Close()
+    }
+    ; GET SHELL COM OBJECTS
+    shell := ComObject("Shell.Application")
+    zip := shell.Namespace(zipPath)
+    if (!zip) {
+        MsgBox("Error creating zip file.")
+        return
+    }
+    ; ZIP THE SELECTED ITEMS
+    if (selected.Length = 1 && DirExist(firstItem)) {
+        ; SINGLE FOLDER => ZIP ITS CONTENTS
+        folder := shell.Namespace(firstItem)
+        if (!folder) {
+            MsgBox("Error accessing folder.")
+            return
+        }
+        items := folder.Items()
+        totalItems := items.Count
+        zip.CopyHere(items, 4|16|128)
+    } else {
+        ; MULTIPLE FILES OR FOLDERS => ZIP THE ITEMS THEMSELVES
+        totalItems := selected.Length
+        for path in selected {
+            zip.CopyHere(path, 4|16|128)
+        }
+    }
+    ; WAIT FOR THE ZIP OPERATION TO COMPLETE
+    itemCount := 0
+    while (itemCount != totalItems) {
+        Sleep(50)
+        itemCount := zip.Items().Count
+    }
+    ; SUCCESS OR FAILURE MESSAGE
+    if (FileExist(zipPath) && itemCount = totalItems) {
+        FileDelete(zipPath)
+        MsgBox("Successfully zipped into '" zipFile "'", "Done creating ZIP file", "OK")
+    } else {
+        FileDelete(zipPath)
+        MsgBox("Something went wrong while compressing into '" zipFile "'", "Error creating ZIP file", "iconX")
+    }
+}
+
+
+
 ;######################################## ADD/REMAP SHORTCUTS ########################################
 
 ; DISABLE THE DEFAULT BEHAVIORS
@@ -263,6 +398,8 @@ $#!c:: {
 
 ; REMAP SHORTCUTS
 ^Tab:: SendInput("!{Tab}")
+
+
 
 ;######################################## MORE KEYBOARD COMBINATIONS ########################################
 
@@ -288,7 +425,9 @@ $#!c:: {
 !<:: SendInput "│"
 !+<:: SendInput "┃"
 
+
 ;######################### REPLACE A STRING FOLLOWED BY A PUNCTUATION WITH ANOTHER STRING #########################
+
 ;########## SPECIAL STRING CHECKS ##########
 ;  :C:  for case sensitivity
 ;  :*:  for instant replacement (no need to press space, enter, etc.)

@@ -80,35 +80,6 @@ PasteText(text) {
     return text
 }
 
-GetIconPath(icon) {
-    switch icon {
-        case "iconX": return "shell32.dll,110"
-        case "icon?": return "shell32.dll,101"
-        case "icon!": return "shell32.dll,103"
-        case "iconI": return "shell32.dll,109"
-        default: return ""
-    }
-}
-
-CreateGui(title, content, icon := "", button := "") {
-    guiObj := Gui("+AlwaysOnTop")
-    guiObj.SetFont("s10", "Segoe UI")
-    guiObj.Title := title
-    iconControl := ""
-    if icon {
-        iconPath := GetIconPath(icon)
-        if iconPath {
-            guiObj.AddPicture("Icon w32 h32 vIcon", "msctls32.dll,-" iconPath)
-        }
-    }
-    guiObj.AddText("w400 vContent", IsObject(content) ? content[1] : content)
-    if button {
-        guiObj.AddButton("w100 h30 vButton", button)
-    }
-    guiObj.Show("AutoSize Center")
-    return guiObj
-}
-
 
 
 ;######################################## AUTO CLICKER ########################################
@@ -355,6 +326,8 @@ $#!c:: {
         MsgBox("Error creating zip file.")
         return
     }
+    ; CHECK FOR COMPRESSION WINDOW AND BRING IT TO FRONT
+    SetTimer(BringCompressionWindowToFront, 100)
     ; ZIP THE SELECTED ITEMS
     if (selected.Length = 1 && DirExist(firstItem)) {
         ; SINGLE FOLDER => ZIP ITS CONTENTS
@@ -379,13 +352,23 @@ $#!c:: {
         Sleep(50)
         itemCount := zip.Items().Count
     }
+    ; STOP CHECKING FOR THE COMPRESSION WINDOW
+    SetTimer(BringCompressionWindowToFront, 0)
     ; SUCCESS OR FAILURE MESSAGE
     if (FileExist(zipPath) && itemCount = totalItems) {
-        FileDelete(zipPath)
         MsgBox("Successfully zipped into '" zipFile "'", "Done creating ZIP file", "OK")
     } else {
         FileDelete(zipPath)
         MsgBox("Something went wrong while compressing into '" zipFile "'", "Error creating ZIP file", "iconX")
+    }
+}
+BringCompressionWindowToFront() {
+    static compressionTitles := ["Compressing..."]
+    for title in compressionTitles {
+        if (hwnd := WinExist(title " ahk_class #32770")) {
+            WinActivate(hwnd)
+            return
+        }
     }
 }
 

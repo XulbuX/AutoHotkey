@@ -356,7 +356,7 @@ $#!c:: {
     SetTimer(BringCompressionWindowToFront, 0)
     ; SUCCESS OR FAILURE MESSAGE
     if (FileExist(zipPath) && itemCount = totalItems) {
-        MsgBox("Successfully zipped into '" zipFile "'", "Done creating ZIP file", "OK")
+        ; MsgBox("Successfully zipped into '" zipFile "'", "Done creating ZIP file", "OK")
     } else {
         FileDelete(zipPath)
         MsgBox("Something went wrong while compressing into '" zipFile "'", "Error creating ZIP file", "iconX")

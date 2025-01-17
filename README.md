@@ -166,7 +166,7 @@ Here you can write certain patterns followed by one or multiple `#` which will g
 The first replacing patterns are for time and date:
 | gets replaced | with                               | instant or not |
 | ------------- | ---------------------------------- | -------------- |
-| `@#`          | date & time: `DD.MM.YYYY HH:mm:ss` | **N:** gets replaced only after a non-text character is written behind it |
+| `@#`          | date & time: `DD.MM.YYYY HH:mm:ss` | **N:** gets replaced only after a non-word text character is written behind it |
 | `@@#`         | Unix timestamp                     | **N**          |
 | `date#`      | date: `DD.MM.YYYY`                 | **N**          |
 | `date##`     | date: `YYYYMMDD`                   | **N**          |

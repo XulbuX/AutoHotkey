@@ -168,21 +168,22 @@ The first replacing patterns are for time and date:
 | ------------- | ---------------------------------- | -------------- |
 | `@#`          | date & time: `DD.MM.YYYY HH:mm:ss` | **N:** gets replaced only after a non-text character is written behind it |
 | `@@#`         | Unix timestamp                     | **N**          |
-| `@date#`      | date: `DD.MM.YYYY`                 | **N**          |
-| `@date##`     | date: `YYYYMMDD`                   | **N**          |
-| `@time#`      | time: `HH:mm`                      | **N**          |
-| `@time##`     | time: `HH:mm:ss`                   | **N**          |
-| `@year#`      | year: `YYYY`                       | **I:** the replacement occurs instantly |
-| `@month#`     | month name                         | **I**          |
-| `@day#`       | day name                           | **I**          |
+| `date#`      | date: `DD.MM.YYYY`                 | **N**          |
+| `date##`     | date: `YYYYMMDD`                   | **N**          |
+| `time#`      | time: `HH:mm`                      | **N**          |
+| `time##`     | time: `HH:mm:ss`                   | **N**          |
+| `year#`      | year: `YYYY`                       | **I:** the replacement occurs instantly |
+| `month#`     | month name                         | **I**          |
+| `day#`       | day name                           | **I**          |
 
 Then there is just small patterns, that get replaces with text.
+These can all be replaced with your real email, name or anything else.
 The replacements here occur all instantly:
 | gets replaced | with text            |
 | ------------- | -------------------- |
-| `@@e`         | `email@example.com` (*can be replaced with your real email in the AHK file*) |
-| `FL#`         | `Firstname Lastname` (*can be replaced with your real name in the AHK file*) |
-| `fl#`         | `firstname.lastname` (*can be replaced with your real name in the AHK file*) |
+| `@@e`         | `email@example.com`  |
+| `FL#`         | `Firstname Lastname` |
+| `fl#`         | `firstname.lastname` |
 
 Then there's a bunch of special text characters, you can type, by writing a pattern with one or multiple `#` behind it, which will then get replaced with the special character.
 I won't list all patterns here, but you can find them all at the bottom inside the AHK file.

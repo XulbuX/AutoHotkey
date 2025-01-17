@@ -410,6 +410,7 @@ BringCompressionWindowToFront() {
 ;########## SPECIAL STRING CHECKS ##########
 ;  :C:  for case sensitivity
 ;  :*:  for instant replacement (no need to press space, enter, etc.)
+;  :b0: the hot string only triggers if it's not part of another word
 
 ;########## DATE AND TIME ##########
 ::@#::{
@@ -418,25 +419,25 @@ BringCompressionWindowToFront() {
 ::@##::{
     Send(DateDiff(A_NowUTC, "19700101000000", "Seconds"))
 }
-::@date#::{
+::date#::{
     Send(FormatTime(, "dd.MM.yyyy"))
 }
-::@date##::{
+::date##::{
     Send(FormatTime(, "yyyyMMdd"))
 }
-::@time#::{
+::time#::{
     Send(FormatTime(, "HH:mm"))
 }
-::@time##::{
+::time##::{
     Send(FormatTime(, "HH:mm:ss"))
 }
-:*:@year#::{
+:*:year#::{
     Send(FormatTime(, "yyyy"))
 }
-:*:@month#::{
+:*:month#::{
     Send(FormatTime(, "MMMM"))
 }
-:*:@day#::{
+:*:day#::{
     Send(FormatTime(, "dddd"))
 }
 
@@ -1209,14 +1210,13 @@ BringCompressionWindowToFront() {
 :*:satellite#::🛰️
 :*:ufo#::🛸️
 ; TIME MANAGEMENT
-:*:clock#::🕐
-:*:time#::🕐
 :*:hour#::🕐
+:*:clock#::🕐
+:*:watch#::🕐
 :*:hourglass#::⌛
 :*:timer#::⌛
 :*:wait#::⌛
 :*:calendar#::📅
-:*:date#::📅
 :*:schedule#::📅
 :*:alarm#::⏰
 :*:reminder#::⏰

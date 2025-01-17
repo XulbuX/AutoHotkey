@@ -18,8 +18,9 @@ USER := EnvGet("USERNAME")
 
 GetSelectedText() {
     ClipSaved := ClipboardAll()
+    A_Clipboard := ""
     SendEvent "^c"
-    SelectedText := StrReplace(A_Clipboard, "/", "\")
+    SelectedText := A_Clipboard
     A_Clipboard := ClipSaved
     return SelectedText
 }
@@ -123,46 +124,39 @@ global autoClickerOn := false ; INIT: `false` = NOT ACTIVE
 ; CONVERT SELECTED TEXT TO UPPERCASE
 ^+u:: {
     selectedText := GetSelectedText()
-    if selectedText {
+    if (selectedText)
         PasteText(StrUpper(selectedText))
-    }
 }
 
 ; CONVERT SELECTED TEXT TO LOWERCASE
 ^+l:: {
     selectedText := GetSelectedText()
-    if selectedText {
+    if (selectedText)
         PasteText(StrLower(selectedText))
-    }
 }
 
 ; OPEN SELECTED TEXT AS WEBSITE/URL
 ^+s:: {
     selectedText := GetSelectedText()
-    if selectedText {
-        if !RegExMatch(selectedText, "^https?://") {
-            selectedText := "https://" selectedText
-        }
+    if (selectedText)
         Run(selectedText)
-    }
 }
 
 ; WEB-SEARCH SELECTED TEXT
 ^!s:: {
     selectedText := GetSelectedText()
-    if selectedText {
+    if (selectedText)
         Run("https://www.google.com/search?q=" . selectedText)
-    }
 }
 
 
 
 ;######################################## LOCK PC ########################################
 
-; PRESS WIN+< TO LOCK COMPUTER
+; LOCK COMPUTER
 #<:: DllCall("LockWorkStation")
 
-; PRESS WIN+SHIFT+< TO LOCK COMPUTER AND PUT COMPUTER TO SLEEP
+; LOCK COMPUTER AND PUT COMPUTER TO SLEEP
 #+<:: {
     ; WAIT FOR THE RELEASE OF THE KEYS
     KeyWait "<", "U"
@@ -172,7 +166,7 @@ global autoClickerOn := false ; INIT: `false` = NOT ACTIVE
     SendMessage(0x112, 0xF170, 2, , "Program Manager")
 }
 
-; PRESS WIN+CTRL+< TO LOCK COMPUTER AND PUT COMPUTER TO HIBERNATE
+; LOCK COMPUTER AND PUT COMPUTER TO HIBERNATE
 #^<:: {
     ; WAIT FOR THE RELEASE OF THE KEYS
     KeyWait "<", "U"
@@ -274,9 +268,10 @@ $#!c:: {
 ;######################################## IN-APP OPERATIONS ########################################
 
 ;########## WINDOWS FILE EXPLORER ##########
+#HotIf WinActive("ahk_class CabinetWClass")
 
 ; TOGGLE HIDDEN FILES DISPLAY
-^F2:: {
+F1:: {
     id := WinExist("A")
     class := WinGetClass(id)
     if (class = "CabinetWClass" || class = "ExploreWClass") {
@@ -292,7 +287,6 @@ $#!c:: {
 }
 
 ; ZIP SELECTED FILE(S) / FOLDER CONTENT / FOLDERS
-#HotIf WinActive("ahk_class CabinetWClass")
 ^+z:: {
     selected := Explorer_GetSelected()
     if (selected.Length = 0) {
@@ -373,6 +367,8 @@ BringCompressionWindowToFront() {
 }
 
 
+#HotIf  ; RESET HOTKEY CONDITION
+
 
 ;######################################## ADD/REMAP SHORTCUTS ########################################
 
@@ -415,6 +411,36 @@ BringCompressionWindowToFront() {
 ;  :C:  for case sensitivity
 ;  :*:  for instant replacement (no need to press space, enter, etc.)
 
+;########## DATE AND TIME ##########
+::@#::{
+    Send(FormatTime(, "dd.MM.yyyy, HH:mm:ss"))
+}
+::@##::{
+    Send(DateDiff(A_NowUTC, "19700101000000", "Seconds"))
+}
+::@date#::{
+    Send(FormatTime(, "dd.MM.yyyy"))
+}
+::@date##::{
+    Send(FormatTime(, "yyyyMMdd"))
+}
+::@time#::{
+    Send(FormatTime(, "HH:mm"))
+}
+::@time##::{
+    Send(FormatTime(, "HH:mm:ss"))
+}
+:*:@year#::{
+    Send(FormatTime(, "yyyy"))
+}
+:*:@month#::{
+    Send(FormatTime(, "MMMM"))
+}
+:*:@day#::{
+    Send(FormatTime(, "dddd"))
+}
+
+;########## LONGER STRINGS ##########
 ; EMAIL SHORTCUTS
 :*:@@m::email@example.com
 
@@ -422,6 +448,7 @@ BringCompressionWindowToFront() {
 :*C:FL#::Firstname Lastname
 :*C:fl#::firstname.lastname
 
+;########## SPECIAL UNICODE ##########
 ; MATHEMATICAL SYMBOLS
 ::=#::≠
 :*:==#::≈
@@ -580,7 +607,7 @@ BringCompressionWindowToFront() {
 :*?:fail#::⨯
 :*?:cross#::⨯
 
-; EMOJIS
+;########## EMOJIS ##########
 ; FEELINGS / EMOTIONS
 :*:smile#::😊
 :*:happy#::😊
@@ -597,7 +624,7 @@ BringCompressionWindowToFront() {
 :*:joking#::🙃
 :*:love_face#::😍
 :*:heart_eyes#::😍
-:*:inlove#::😍
+:*:in_love#::😍
 :*:kiss#::😘
 :*:mwah#::😘
 :*:xoxo#::😘
@@ -613,10 +640,6 @@ BringCompressionWindowToFront() {
 :*:cool#::😎
 :*:sunglasses#::😎
 :*:awesome#::😎
-:*:perfect#::👌
-:*:ok#::👌
-:*:okay#::👌
-:*:good#::👌
 :*:drool#::🤤
 :*:yummy#::🤤
 :*:tasty#::🤤
@@ -637,6 +660,7 @@ BringCompressionWindowToFront() {
 :*:woohoo#::🥳
 :*:star_struck#::🤩
 :*:amazed#::🤩
+:*:amazing#::🤩
 :*:wow#::🤩
 :*:mindblown#::🤯
 :*:explode#::🤯
@@ -661,13 +685,6 @@ BringCompressionWindowToFront() {
 :*:smart#::🤓
 :*:stupid#::🥴
 :*:dumb#::🥴
-:*:shrug#::🤷
-:*:dunno#::🤷
-:*:whatever#::🤷
-:*:idk#::🤷
-:*:facepalm#::🤦
-:*:smh#::🤦
-:*:doh#::🤦
 :*:eyes#::👀
 :*:look#::👀
 :*:peek#::👀
@@ -680,8 +697,11 @@ BringCompressionWindowToFront() {
 :*:angry#::😠
 :*:mad#::😠
 :*:rage#::😠
+:*:annoyed#::😠
+:*:steaming#::🤬
 :*:furious#::🤬
 :*:outrage#::🤬
+:*:outraged#::🤬
 :*:fury#::🤬
 :*:tired#::😫
 :*:exhausted#::😫
@@ -689,13 +709,16 @@ BringCompressionWindowToFront() {
 :*:worried#::😟
 :*:concerned#::😟
 :*:anxious#::😟
+:*:cold#::🥶
 :*:icecold#::🥶
 :*:freezing#::🥶
-:*:frozen#::🥶
 :*:sick#::🤢
 :*:ill#::🤢
 :*:nauseous#::🤢
-:*:(virus|microbe|sickness|infection)::🦠
+:*:virus#::🦠
+:*:microbe#::🦠
+:*:sickness#::🦠
+:*:infection#::🦠
 :*:rip#::💀
 :*:skull#::💀
 :*:crossbones#::☠️
@@ -718,6 +741,10 @@ BringCompressionWindowToFront() {
 :*:thumbsdown#::👎
 :*:dislike#::👎
 :*:downvote#::👎
+:*:perfect#::👌
+:*:ok#::👌
+:*:okay#::👌
+:*:good#::👌
 :*:clap#::👏
 :*:applause#::👏
 :*:bravo#::👏
@@ -745,6 +772,13 @@ BringCompressionWindowToFront() {
 :*:peace#::✌️
 :*:victory#::✌️
 :*:yeah#::✌️
+:*:shrug#::🤷
+:*:dunno#::🤷
+:*:whatever#::🤷
+:*:idk#::🤷
+:*:facepalm#::🤦
+:*:smh#::🤦
+:*:doh#::🤦
 ; TECH & DEVELOPER
 :*:keyboard#::⌨️
 :*:type#::⌨️
@@ -757,11 +791,11 @@ BringCompressionWindowToFront() {
 :*:shell#::📟
 :*:cmd#::📟
 :*:programmer#::👨‍💻
-:*:dev#::👨‍💻
 :*:coder#::👨‍💻
+:*:dev#::👨‍💻
 :*:robot#::🤖
-:*:bot#::🤖
 :*:auto#::🤖
+:*:bot#::🤖
 :*:rocket#::🚀
 :*:deploy#::🚀
 :*:launch#::🚀
@@ -771,16 +805,16 @@ BringCompressionWindowToFront() {
 :*:play#::▶️
 :*:refresh#::🔄
 :*:reload#::🔄
-:*:sync#::🔄
 :*:update#::🔄
+:*:sync#::🔄
 :*:wifi#::📶
 :*:wireless#::📶
 :*:signal#::📶
 :*:network#::📶
-:*:download#::⏬
+:*:download#::⬇️
 :*:down#::⏬
 :*:save#::⏬
-:*:upload#::⏫
+:*:upload#::⬆️
 :*:up#::⏫
 :*:push#::⏫
 :*:stop#::⏹️
@@ -804,13 +838,13 @@ BringCompressionWindowToFront() {
 :*:folder#::📂
 :*:dir#::📂
 :*:directory#::📂
-:*:files#::📂
 :*:files#::🗃️
 :*:documents#::🗃️
 :*:docs#::🗃️
 :*:file#::📄
-:*:document#::📄
+:*:textfile#::📄
 :*:doc#::📄
+:*:document#::📄
 :*:magnify#::🔍
 :*:search#::🔍
 :*:find#::🔍
@@ -1109,6 +1143,7 @@ BringCompressionWindowToFront() {
 :*:fire_heart#::❤️‍🔥
 :*:passion#::❤️‍🔥
 :*:desire#::❤️‍🔥
+:*:hearts#::💕
 ; WEATHER & NATURE
 :*:sun#::☀️
 :*:sunshine#::☀️
@@ -1124,21 +1159,55 @@ BringCompressionWindowToFront() {
 :*:fire#::🔥
 :*:flame#::🔥
 :*:burn#::🔥
+:*:water#::💧
+:*:drop#::💧
+:*:raindrop#::💧
+:*:splash#::💦
+:*:fluid#::💦
+:*:liquid#::💦
+:*:plant#::🌱
+:*:seed#::🌱
+:*:natural#::🌱
 :*:tree#::🌳
 :*:forest#::🌳
-:*:plant#::🌳
-:*:flower#::🌸
-:*:blossom#::🌸
-:*:bloom#::🌸
-:*:snowflake#::❄️
-:*:winter#::❄️
-:*:(ice|ice_cube|freeze)::🧊
 :*:leaf#::🍃
 :*:leafy#::🍃
 :*:green#::🍃
+:*:wood#::🪵
 :*:rock#::🪨
 :*:stone#::🪨
 :*:rocky#::🪨
+:*:flower#::🌸
+:*:blossom#::🌸
+:*:bloom#::🌸
+:*:rose#::🌹
+:*:tulip#::🌷
+:*:hyacinth#::🪻
+:*:snowflake#::❄️
+:*:winter#::❄️
+:*:ice#::🧊
+:*:ice_cube#::🧊
+:*:freeze#::🧊
+:*:frozen#::🧊
+; SPACE
+:*:space#::🌌
+:*:galaxy#::🌌
+:*:meteor#::☄️
+:*:meteorite#::☄️
+:*:planet#::🪐
+:*:saturn#::🪐
+:*:earth#::🌏
+:*:world#::🌏
+:*:globe#::🌏
+:*:moon_cycle#::🌙
+:*:moon#::🌕
+:*:full_moon#::🌕
+:*:waxing_gibbous_moon#::🌔
+:*:first_quarter_moon#::🌓
+:*:waxing_moon#::🌒
+:*:new_moon#::🌑
+:*:satellite#::🛰️
+:*:ufo#::🛸️
 ; TIME MANAGEMENT
 :*:clock#::🕐
 :*:time#::🕐
@@ -1158,15 +1227,21 @@ BringCompressionWindowToFront() {
 ; ACHIEVEMENTS
 :*:trophy#::🏆
 :*:win#::🏆
+:*:winner#::🏆
 :*:champion#::🏆
 :*:medal#::🏅
 :*:prize#::🏅
 :*:award#::🏅
 :*:crown#::👑
 :*:royal#::👑
+:*:king#::👑
+:*:queen#::👑
+:*:lead#::👑
 :*:leader#::👑
+:*:dia#::💎
 :*:diamond#::💎
 :*:gem#::💎
+:*:gemstone#::💎
 :*:jewel#::💎
 :*:target#::🎯
 :*:aim#::🎯

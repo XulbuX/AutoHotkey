@@ -423,7 +423,7 @@ BringCompressionWindowToFront() {
     Send(FormatTime(, "dd.MM.yyyy"))
 }
 ::date##::{
-    Send(FormatTime(, "yyyyMMdd"))
+    Send(StrReplace(FormatTime(, "yyyy MM dd"), " ", ""))
 }
 ::time#::{
     Send(FormatTime(, "HH:mm"))

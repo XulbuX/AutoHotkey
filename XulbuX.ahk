@@ -1033,7 +1033,6 @@ BringCompressionWindowToFront() {
 :*:remove#::➖
 :*:multiply#::✖️
 :*:times#::✖️
-:*:x#::✖️
 :*:divide#::➗
 :*:division#::➗
 :*:slash#::➗

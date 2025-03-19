@@ -170,17 +170,17 @@ This will add more keyboard combinations to write more than the default special 
 Here you can write certain patterns followed by one or multiple `#` which will get replaced with something else.
 
 The first replacing patterns are for time and date:
-| gets replaced | with                               | instant or not |
-| ------------- | ---------------------------------- | -------------- |
-| `@#`          | date & time: `DD.MM.YYYY HH:mm:ss` | **N:** gets replaced only after a non-word text character is written behind it |
-| `@@#`         | Unix timestamp                     | **N**          |
-| `date#`      | date: `DD.MM.YYYY`                 | **N**          |
-| `date##`     | date: `YYYYMMDD`                   | **N**          |
-| `time#`      | time: `HH:mm`                      | **N**          |
-| `time##`     | time: `HH:mm:ss`                   | **N**          |
-| `year#`      | year: `YYYY`                       | **I:** the replacement occurs instantly |
-| `month#`     | month name                         | **I**          |
-| `day#`       | day name                           | **I**          |
+| gets replaced | with                                      | instant or not |
+| ------------- | ----------------------------------------- | -------------- |
+| `@#`          | ISO 8601 timestamp: `YYYY-MM-DD hh:mm:ss` | **N:** gets replaced only after a non-word text character is written behind it |
+| `@@#`         | Unix timestamp                            | **N**          |
+| `date#`       | date: `DD.MM.YYYY`                        | **N**          |
+| `date##`      | date: `YYYYMMDD`                          | **N**          |
+| `time#`       | time: `hh:mm`                             | **N**          |
+| `time##`      | time: `hh:mm:ss`                          | **N**          |
+| `year#`       | year: `YYYY`                              | **I:** the replacement occurs instantly |
+| `month#`      | month name                                | **I**          |
+| `day#`        | day name                                  | **I**          |
 
 Then there is just small patterns, that get replaces with text.
 These can all be replaced with your real email, name or anything else.
@@ -214,7 +214,7 @@ Again, I'm not going to list them all here, but here's a few examples:
 | gets replaced                                        | with emoji |
 | ---------------------------------------------------- | ---------- |
 | `smile#` `happy#` `cheerful#`                        | `😊`       |
-| `joy#` `rofl#` `xd#`                                 | `😂`       |
+| `lol#` `joy#` `rofl#` `xd#`                          | `😂`       |
 | `sob#` `weep#` `bawl#`                               | `😭`       |
 | `steaming#` `furious#` `outrage#` `fury#`            | `😡`       |
 | `thumbsup#` `like#` `upvote#`                        | `👍`       |

@@ -411,7 +411,7 @@ BringCompressionWindowToFront() {
 <^>!+.:: SendInput "•"
 
 <^>!-:: SendInput "–"
-<^>!+-:: SendInput "±"
+<^>!+-:: SendInput "—"
 <^>!+7:: SendInput "÷"
 <^>!x:: SendInput "×"
 
@@ -435,7 +435,7 @@ BringCompressionWindowToFront() {
 
 ;########## DATE AND TIME ##########
 ::@#::{
-    Send(FormatTime(, "dd.MM.yyyy, HH:mm:ss"))
+    Send(FormatTime(, "yyyy-MM-dd HH:mm:ss"))
 }
 ::@##::{
     Send(DateDiff(A_NowUTC, "19700101000000", "Seconds"))
@@ -484,6 +484,7 @@ BringCompressionWindowToFront() {
 :C:X#::✖
 :*:8#::∞
 :*:+-#::±
+:*:-+#::±
 :*:pi#::π
 :*:inf#::∞
 :*:int#::∫
@@ -635,8 +636,9 @@ BringCompressionWindowToFront() {
 :*:happy#::😊
 :*:cheerful#::😊
 :*:laugh#::😄
-:*:lol#::😄
+:*:laughing#::😄
 :*:haha#::😄
+:*:lol#::😂
 :*:joy#::😂
 :*:rofl#::😂
 :*:xd#::😂

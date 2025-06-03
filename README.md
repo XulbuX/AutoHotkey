@@ -98,10 +98,15 @@ It's no ordinary auto clicker though, this auto clicker works differently:
 * `Ctrl + Shift + L` converts the selected to all lowercase:<br>
   If you want to convert text with linebreaks to lowercase, coy that text and then press `Ctrl + Shift + L`. If you now paste the text again, it will be all lowercase.
 * `Alt + N` normalizes the selected text:<br>
+  - replaces characters like `äöü...` with `ae`, `oe`, `ue`, ...
+  - replaces characters like `åéî...` with `a`, `e`, `i`, ...
+  - replaces spaces with underscores `_`
+  - removes any other special characters
+* `Alt + Shift + N` normalizes the selected text:<br>
   - lowercases everything
   - replaces characters like `äöü...` with `ae`, `oe`, `ue`, ...
   - replaces characters like `åéî...` with `a`, `e`, `i`, ...
-  - replaces spaces with a dashes `-`
+  - replaces spaces with hyphens `-`
   - removes any other special characters
 * `Ctrl + Shift + S` will open the selected text as website/URL.
 * `Ctrl + Alt + S` will web search for the selected text.

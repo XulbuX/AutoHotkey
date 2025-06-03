@@ -64,6 +64,10 @@ Explorer_GetSelected() {
     return selectedItems
 }
 
+EscapeRegEx(str) {
+    return RegExReplace(str, "([.*?+\[\](){}\\^$|])", "\$1")
+}
+
 EnvReplace(path) {
     pos := 1
     while (pos := RegExMatch(path, "i)%(\w+)%", &match, pos)) {
@@ -135,25 +139,62 @@ global autoClickerOn := false ; INIT: `false` = NOT ACTIVE
         PasteText(StrLower(selectedText))
 }
 
-; NORMALIZE SELECTED TEXT (LOWER & REMOVE/CONVERT SPECIAL CHARS)
-!n:: {
+; NORMALIZE SELECTED TEXT (LOWER/KEEP CASE & REMOVE/CONVERT SPECIAL CHARS)
+NormalizeSelectedText(separatorChar, keepCase := false, allowDots := false) {
     selectedText := GetSelectedText()
     if (selectedText) {
-        selectedText := StrLower(selectedText)
-        replacements := Map(
+        normalizeCharMap := Map(
             "ä", "ae", "ö", "oe", "ü", "ue", "ß", "ss", "é", "e", "è", "e", "ê", "e",
             "ë", "e", "á", "a", "à", "a", "â", "a", "ã", "a", "å", "a", "í", "i", "ì",
             "i", "î", "i", "ï", "i", "ó", "o", "ò", "o", "ô", "o", "õ", "o", "ú", "u",
             "ù", "u", "û", "u", "ý", "y", "ÿ", "y", "ñ", "n", "ç", "c"
         )
-        for char, replacement in replacements {
-            selectedText := StrReplace(selectedText, char, replacement)
+
+        if (keepCase) {
+            processedText := ""
+            loop StrLen(selectedText) {
+                char := SubStr(selectedText, A_Index, 1)
+                lowerChar := StrLower(char)
+                if (normalizeCharMap.Has(lowerChar)) {
+                    replacement := normalizeCharMap[lowerChar]
+                    if (char == StrUpper(char) && char != lowerChar) { 
+                        processedText .= StrUpper(replacement)
+                    } else {
+                        processedText .= replacement
+                    }
+                } else {
+                    processedText .= char
+                }
+            }
+            selectedText := processedText
+        } else {
+            selectedText := StrLower(selectedText)
+            for charKeyInMap, replacement in normalizeCharMap {
+                selectedText := StrReplace(selectedText, charKeyInMap, replacement)
+            }
         }
-        selectedText := RegExReplace(selectedText, "\s+|[\\/+]+", "-")
-        selectedText := RegExReplace(selectedText, "[^a-z0-9\-_]", "")
-        selectedText := RegExReplace(selectedText, "-+", "-")
+
+        selectedText := RegExReplace(selectedText, "\s+|[\\\/+]+", separatorChar)
+
+        regexAllowedCharsPattern := ""
+        if (keepCase) regexAllowedCharsPattern .= "A-Z" ;
+        regexAllowedCharsPattern .= "a-z0-9" ;
+        if (allowDots) regexAllowedCharsPattern .= "\." ;
+        regexAllowedCharsPattern .= "\-_" ;
+        selectedText := RegExReplace(selectedText, "[^" . regexAllowedCharsPattern . "]", "")
+        selectedText := RegExReplace(selectedText, EscapeRegEx(separatorChar) . "+", separatorChar)
         PasteText(selectedText)
     }
+}
+
+; NORMALIZE SELECTED TEXT (USE UNDERSCORE, KEEP CASE, ALLOW DOTS)
+!n:: {
+    NormalizeSelectedText("_", true, true)
+}
+
+; NORMALIZE SELECTED TEXT (USE HYPHEN, LOWERCASE, NO DOTS)
+!+n:: {
+    NormalizeSelectedText("-", false, false)
 }
 
 ; OPEN SELECTED TEXT AS WEBSITE/URL

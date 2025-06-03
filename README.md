@@ -101,13 +101,13 @@ It's no ordinary auto clicker though, this auto clicker works differently:
   - replaces characters like `äöü...` with `ae`, `oe`, `ue`, ...
   - replaces characters like `åéî...` with `a`, `e`, `i`, ...
   - replaces spaces with underscores `_`
-  - removes any other special characters
+  - removes any other special characters, except points `.`
 * `Alt + Shift + N` normalizes the selected text:<br>
   - lowercases everything
   - replaces characters like `äöü...` with `ae`, `oe`, `ue`, ...
   - replaces characters like `åéî...` with `a`, `e`, `i`, ...
   - replaces spaces with hyphens `-`
-  - removes any other special characters
+  - removes any other special characters, including points `.`
 * `Ctrl + Shift + S` will open the selected text as website/URL.
 * `Ctrl + Alt + S` will web search for the selected text.
 

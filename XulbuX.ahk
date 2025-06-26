@@ -566,6 +566,7 @@ BringCompressionWindowToFront() {
 :*:!!#::‼
 :*:?!#::‽
 :*:!?#::‽
+:*:ss#::ß
 :*:p#::¶
 
 ; CODING SYMBOLS

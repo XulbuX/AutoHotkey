@@ -242,43 +242,55 @@ NormalizeSelectedText(separatorChar, keepCase := false, allowDots := false) {
 
 ;######################################## LAUNCH APPS ########################################
 
-;########## LAUNCH BROWSER ##########
-
-launch_browser(dev_mode := false) {
-    paths := [
-        'C:\Program Files\Google\Chrome Dev\Application\chrome.exe',
-        'C:\Program Files\Google\Chrome\Application\chrome.exe',
-        'C:\Program Files\Mozilla Firefox\firefox.exe',
-        'C:\Program Files\Opera GX\Launcher.exe',
-        'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'
-    ]
-    params := dev_mode ? '--incognito' : ''
-    for path in paths {
+; LAUNCH APPLICATION FROM A LIST OF POSSIBLE PATHS
+LaunchApp(exe_paths, params := '') {
+    for path in exe_paths {
         if FileExist(path) {
-            Run('"' path '" ' params)
+            Run('"' path '"' (params ? ' ' params : ''))
             return
         }
     }
 }
 
-$#!b:: launch_browser()
-$#^b:: launch_browser(true)
+;########## LAUNCH BROWSER ##########
+
+launchBrowser(incognito := false) {
+    LaunchApp([
+        'C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe',
+        'C:\Program Files\Microsoft\Edge\Application\msedge.exe',
+        'C:\Program Files\Mozilla Firefox\firefox.exe',
+        'C:\Program Files\Opera GX\Launcher.exe',
+        'C:\Program Files\Google\Chrome\Application\chrome.exe'
+    ], incognito ? '--incognito' : '')
+}
+
+$#!b:: launchBrowser()
+$#^b:: launchBrowser(true)
 
 
 ;########## OPEN SELECTED FILE WITH APP ##########
 
 ; VisualStudioCode
+launchVSCode(selectedFile := '') {
+    LaunchApp([
+        'C:\Users\' USER '\AppData\Local\Programs\Microsoft VS Code\Code.exe',
+        'C:\Users\' USER '\AppData\Local\Programs\Microsoft VS Code\_\Code.exe',
+        'C:\Program Files\Microsoft VS Code\Code.exe',
+        'C:\Program Files (x86)\Microsoft VS Code\Code.exe'
+    ], selectedFile ? '"' selectedFile '"' : '')
+}
+
 $#!v:: {
     winClass := WinGetClass("A")
     if (winClass = "CabinetWClass" or winClass = "ExploreWClass") {
         selectedFile := GetSelectedFile()
         if (selectedFile) {
-            Run "C:\Users\" USER '\AppData\Local\Programs\Microsoft VS Code\Code.exe "' selectedFile '"'
+            launchVSCode(selectedFile)
         } else {
-            Run "C:\Users\" USER "\AppData\Local\Programs\Microsoft VS Code\Code.exe"
+            launchVSCode()
         }
     } else {
-        Run "C:\Users\" USER "\AppData\Local\Programs\Microsoft VS Code\Code.exe"
+        launchVSCode()
     }
 }
 

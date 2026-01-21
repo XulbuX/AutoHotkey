@@ -3,11 +3,12 @@ This repository contains AutoHotkey (*AHK*) scripts, which do a lot of really co
 For more information on AutoHotkey, how to use it and how to write AHK scripts, check out the [AutoHotkey documentation](https://www.autohotkey.com/docs/v2).
 
 > [!NOTE]
-> Most of the scripts in this repo only work for Windows, still the functionalities, that don't rely on Windows specific things, might work on other OSes too.
+> 1. Most of the scripts in this repo only work for Windows, still the functionalities, that don't rely on Windows specific things, should work on other OSes too.
+> 2. Certain hotkey functionalities are disabled (*commented out*) per default. Feel free to look for them (*commented out lines start with* `;::`) and enable them if you like to use them.
 
 <br>
 
-## AHK files
+## AHK files in this repo
 
 * [XulbuX AHK](#xulbux-ahk)
 
@@ -23,13 +24,13 @@ If you want the scripts to start automatically on PC startup, follow the next st
 
 <br>
 
-## How to Make an AHK File Start Automatically
+## How to make an AHK file auto start at logon?
 
 
 ### Windows
 
 1. Create your AHK file.
-2. Press `Win + R`, type `%appdata%\Microsoft\Windows\Start Menu\Programs\Startup`, and press `Enter`.
+2. Press `Win + R`, type `shell:common startup`, and press `Enter`.
 3. Place a shortcut of your AHK file, or the script file itself, in this folder.
 
 
@@ -196,30 +197,30 @@ The replacements here occur all instantly:
 | `FL#`         | `Firstname Lastname` |
 | `fl#`         | `firstname.lastname` |
 
-Then there's a bunch of special text characters, you can type, by writing a pattern with one or multiple `#` behind it, which will then get replaced with the special character.
+Then there are a bunch of special text characters, you can type, by writing a pattern with one or multiple `#` behind it, which will then get replaced with the special character.
 I won't list all patterns here, but you can find them all at the bottom inside the AHK file.
-Here's a few examples what those patterns look like:
-| gets replaced | with character/s | instant or not |
-| ------------- | ---------------- | -------------- |
-| `=#`          | `≠`              | **N**          |
-| `==#`         | `≈`              | **I**          |
-| `micro#`      | `µ`              | **I**          |
-| `permil#`     | `‰`              | **I**          |
-| `permille#`   | `‱`             | **I**          |
-| `3/4#`        | `¾`              | **I**          |
-| `->#`         | `→`              | **N**          |
-| `->##`        | `⇾`              | **N**          |
-| `->###`       | `➜`              | **N**          |
-| `=##`         | `╣║╗╝╚╔╩╦╠═╬`    | **N**          |
-| ...           |                  |                |
+Here are a few examples what those patterns look like:
+| gets replaced      | with character/s | instant replacement |
+| ------------------ | ---------------- | ------------------- |
+| `~#`               | `≈`              | ✅                  |
+| `!=#`              | `≠`              | ✅                  |
+| `=#`               | `╣║╗╝╚╔╩╦╠═╬`    | ✅                  |
+| `micro#`           | `µ`              | ✅                  |
+| `permil#`          | `‰`              | ✅                  |
+| `permille#`        | `‱`             | ✅                  |
+| `3/4#`             | `¾`              | ✅                  |
+| `->#`              | `⭢`              | ❌                  |
+| `->##`             | `⇾`              | ❌                  |
+| `->###`            | `⇢`              | ❌                  |
+|  … and many more … |                  |                     |
 
-There are also a ton of emojis, which you can write their name followed by a `#` to get that emoji.Here there are even multiple different names you can use to get the same emoji.
+There are also a ton of emojis, which you can write their name followed by a `#` to get that emoji. Here there are even multiple different names you can use to get the same emoji.
 The replacements here again occur all instantly.
 Again, I'm not going to list them all here, but here's a few examples:
 | gets replaced                                        | with emoji |
 | ---------------------------------------------------- | ---------- |
 | `smile#` `happy#` `cheerful#`                        | `😊`       |
-| `lol#` `joy#` `rofl#` `xd#`                          | `😂`       |
+| `lol#` `joy#` `rofl#`                                | `😂`       |
 | `sob#` `weep#` `bawl#`                               | `😭`       |
 | `steaming#` `furious#` `outrage#` `fury#`            | `😡`       |
 | `thumbsup#` `like#` `upvote#`                        | `👍`       |
@@ -236,6 +237,6 @@ Again, I'm not going to list them all here, but here's a few examples:
 | `ice#` `ice_cube#` `freeze#` `frozen#`               | `🧊`       |
 | `dia#` `diamond#` `gem#` `gemstone#`                 | `💎`       |
 | `crown#` `royal#` `king#` `queen#` `lead#` `leader#` | `👑`       |
-| ...                                                  |            |
+| … and many more …                                    |            |
 
-There's also a few more things, like the `@#` pattern, which gets replaced with the current date, and the `time#` pattern, which gets replaced with the current time.
+There are also a few more things, like the `@#` pattern, which gets replaced with the current date, and the `time#` pattern, which gets replaced with the current time.

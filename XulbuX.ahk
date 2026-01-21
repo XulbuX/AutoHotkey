@@ -30,9 +30,8 @@ GetSelectedFile() {
     for window in shell.Windows {
         if (window.HWND = WinGetID("A")) {
             selectedItems := window.Document.SelectedItems
-            if (selectedItems.Count > 0) {
+            if (selectedItems.Count > 0)
                 return selectedItems.Item(0).Path
-            }
         }
     }
     return ""
@@ -41,9 +40,8 @@ GetSelectedFile() {
 GetExplorerPath() {
     shell := ComObject("Shell.Application")
     for window in shell.Windows {
-        if (window.HWND = WinGetID("A")) {
+        if (window.HWND = WinGetID("A"))
             return window.Document.Folder.Self.Path
-        }
     }
     return ""
 }
@@ -54,9 +52,8 @@ Explorer_GetSelected() {
         for window in ComObject("Shell.Application").Windows {
             if (window.HWND == hwnd) {
                 items := window.Document.SelectedItems()
-                loop items.Count {
+                loop items.Count
                     selectedItems.Push(items.Item(A_Index - 1).Path)
-                }
                 return selectedItems
             }
         }
@@ -80,17 +77,23 @@ EnvReplace(path) {
 }
 
 PasteText(text) {
+    ClipSaved := ClipboardAll()
     A_Clipboard := text
     SendInput("^v")
+    Sleep 100
+    A_Clipboard := ClipSaved
     return text
 }
 
 
 
+
 ;######################################## AUTO CLICKER ########################################
+
 
 global autoClickerOn := false ; INIT: `false` = NOT ACTIVE
 
+; TOGGLE AUTO-CLICKER FUNCTIONALITY ON/OFF
 +Esc:: {
     global
     autoClickerOn := !autoClickerOn
@@ -101,6 +104,7 @@ global autoClickerOn := false ; INIT: `false` = NOT ACTIVE
     SetTimer () => ToolTip(), -600
 }
 
+; START AUTO-CLICKING LEFT MOUSE BUTTON AFTER 500MS HOLD
 ~$LButton:: {
     global
     if (autoClickerOn) {
@@ -111,6 +115,7 @@ global autoClickerOn := false ; INIT: `false` = NOT ACTIVE
     }
 }
 
+; START AUTO-CLICKING RIGHT MOUSE BUTTON AFTER 500MS HOLD
 ~$RButton:: {
     global
     if (autoClickerOn) {
@@ -123,7 +128,9 @@ global autoClickerOn := false ; INIT: `false` = NOT ACTIVE
 
 
 
+
 ;######################################## CODE OPERATIONS ########################################
+
 
 ; CONVERT SELECTED TEXT TO UPPERCASE
 ^+u:: {
@@ -157,11 +164,10 @@ NormalizeSelectedText(separatorChar, keepCase := false, allowDots := false) {
                 lowerChar := StrLower(char)
                 if (normalizeCharMap.Has(lowerChar)) {
                     replacement := normalizeCharMap[lowerChar]
-                    if (char == StrUpper(char) && char != lowerChar) { 
+                    if (char == StrUpper(char) && char != lowerChar)
                         processedText .= StrUpper(replacement)
-                    } else {
+                    else
                         processedText .= replacement
-                    }
                 } else {
                     processedText .= char
                 }
@@ -169,9 +175,8 @@ NormalizeSelectedText(separatorChar, keepCase := false, allowDots := false) {
             selectedText := processedText
         } else {
             selectedText := StrLower(selectedText)
-            for charKeyInMap, replacement in normalizeCharMap {
+            for charKeyInMap, replacement in normalizeCharMap
                 selectedText := StrReplace(selectedText, charKeyInMap, replacement)
-            }
         }
 
         selectedText := RegExReplace(selectedText, "\s+|[\\\/+]+", separatorChar)
@@ -213,7 +218,9 @@ NormalizeSelectedText(separatorChar, keepCase := false, allowDots := false) {
 
 
 
+
 ;######################################## LOCK PC ########################################
+
 
 ; LOCK COMPUTER
 #<:: DllCall("LockWorkStation")
@@ -240,7 +247,9 @@ NormalizeSelectedText(separatorChar, keepCase := false, allowDots := false) {
 
 
 
+
 ;######################################## LAUNCH APPS ########################################
+
 
 ; LAUNCH APPLICATION FROM A LIST OF POSSIBLE PATHS
 LaunchApp(exe_paths, params := '') {
@@ -252,9 +261,10 @@ LaunchApp(exe_paths, params := '') {
     }
 }
 
+
 ;########## LAUNCH BROWSER ##########
 
-launchBrowser(incognito := false) {
+LaunchBrowser(incognito := false) {
     LaunchApp([
         'C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe',
         'C:\Program Files\Microsoft\Edge\Application\msedge.exe',
@@ -264,14 +274,15 @@ launchBrowser(incognito := false) {
     ], incognito ? '--incognito' : '')
 }
 
-$#!b:: launchBrowser()
-$#^b:: launchBrowser(true)
+;:: UNCOMMENT TO ENABLE BROWSER LAUNCH HOTKEYS ::
+; $#!b:: launchBrowser()
+; $#^b:: launchBrowser(true)
 
 
 ;########## OPEN SELECTED FILE WITH APP ##########
 
-; VisualStudioCode
-launchVSCode(selectedFile := '') {
+; VS Code / VS Code Insiders
+LaunchCodeWithFile(selectedFile := '') {
     LaunchApp([
         'C:\Users\' USER '\AppData\Local\Programs\Microsoft VS Code\Code.exe',
         'C:\Users\' USER '\AppData\Local\Programs\Microsoft VS Code\_\Code.exe',
@@ -279,73 +290,78 @@ launchVSCode(selectedFile := '') {
         'C:\Program Files (x86)\Microsoft VS Code\Code.exe'
     ], selectedFile ? '"' selectedFile '"' : '')
 }
-
-$#!v:: {
+LaunchVSCode() {
     winClass := WinGetClass("A")
     if (winClass = "CabinetWClass" or winClass = "ExploreWClass") {
         selectedFile := GetSelectedFile()
-        if (selectedFile) {
-            launchVSCode(selectedFile)
-        } else {
-            launchVSCode()
-        }
+        if (selectedFile)
+            LaunchCodeWithFile(selectedFile)
+        else
+            LaunchCodeWithFile()
     } else {
-        launchVSCode()
+        LaunchCodeWithFile()
     }
 }
+
+;:: UNCOMMENT TO ENABLE VS CODE LAUNCH HOTKEY ::
+; $#!v:: LaunchVSCode()
 
 
 ;########## LAUNCH IN CURRENT DIRECTORY / SELECTED PATH ##########
 
-; FileExplorer
-$#e:: {
+; File Explorer
+LaunchExplorer() {
     if (WinGetClass("A") = "CabinetWClass" or WinGetClass("A") = "ExploreWClass") {
         currentDir := GetExplorerPath()
-        if (currentDir) {
+        if (currentDir)
             Run('explorer.exe "' currentDir '"')
-        } else {
+        else
             Run("explorer.exe")
-        }
     } else {
         selectedText := GetSelectedText()
         path := EnvReplace(selectedText)
-        if (FileExist(path)) {
+        if (FileExist(path))
             Run('explorer.exe "' path '"')
-        } else {
+        else
             Run("explorer.exe")
-        }
     }
 }
 
-; WindowsTerminal
-$#!c:: {
+;:: UNCOMMENT TO ENABLE EXPLORER LAUNCH HOTKEY ::
+; $#e:: LaunchExplorer()
+
+; Windows Terminal
+LaunchWinTerminal() {
     if (WinGetClass("A") = "CabinetWClass" or WinGetClass("A") = "ExploreWClass") {
         currentDir := GetExplorerPath()
-        if (currentDir) {
+        if (currentDir)
             Run('wt.exe -d "' currentDir '"')
-        } else {
+        else
             Run "wt.exe"
-        }
     } else {
         selectedText := GetSelectedText()
         path := EnvReplace(selectedText)
-        if (FileExist(path)) {
+        if (FileExist(path))
             Run('wt.exe -d "' path '"')
-        } else {
+        else
             Run "wt.exe"
-        }
     }
 }
+
+;:: UNCOMMENT TO ENABLE WINDOWS TERMINAL LAUNCH HOTKEY ::
+; $#!c:: LaunchWinTerminal()
+
 
 
 
 ;######################################## IN-APP OPERATIONS ########################################
 
+
 ;########## WINDOWS FILE EXPLORER ##########
+
 #HotIf WinActive("ahk_class CabinetWClass")
 
-; TOGGLE HIDDEN FILES DISPLAY
-F1:: {
+ToggleHiddenFiles() {
     id := WinExist("A")
     class := WinGetClass(id)
     if (class = "CabinetWClass" || class = "ExploreWClass") {
@@ -360,12 +376,20 @@ F1:: {
     }
 }
 
-; ZIP SELECTED FILE(S) / FOLDER CONTENT / FOLDERS
-^+z:: {
-    selected := Explorer_GetSelected()
-    if (selected.Length = 0) {
-        return
+BringCompressionWindowToFront() {
+    static compressionTitles := ["Compressing..."]
+    for title in compressionTitles {
+        if (hwnd := WinExist(title " ahk_class #32770")) {
+            WinActivate(hwnd)
+            return
+        }
     }
+}
+
+CreateArchiveOfSelected() {
+    selected := Explorer_GetSelected()
+    if (selected.Length = 0)
+        return
     firstItem := selected[1]
     if (DirExist(firstItem)) {
         ; FOLDER(S) SELECTED => ZIP USING FIRST FOLDER'S NAME
@@ -379,14 +403,10 @@ F1:: {
         zipPath := dir "\" zipFile
     }
     ; DELETE EXISTING ZIP FILE (IF EXISTS)
-    if FileExist(zipPath) {
-        FileDelete(zipPath)
-    }
+    if FileExist(zipPath) FileDelete(zipPath)
     ; CREATE EMPTY ZIP FILE
     zip := FileOpen(zipPath, "w")
-    if (zip) {
-        zip.Close()
-    }
+    if (zip) zip.Close()
     ; GET SHELL COM OBJECTS
     shell := ComObject("Shell.Application")
     zip := shell.Namespace(zipPath)
@@ -410,9 +430,8 @@ F1:: {
     } else {
         ; MULTIPLE FILES OR FOLDERS => ZIP THE ITEMS THEMSELVES
         totalItems := selected.Length
-        for path in selected {
+        for path in selected
             zip.CopyHere(path, 4|16|128)
-        }
     }
     ; WAIT FOR THE ZIP OPERATION TO COMPLETE
     itemCount := 0
@@ -430,31 +449,21 @@ F1:: {
         MsgBox("Something went wrong while compressing into '" zipFile "'", "Error creating ZIP file", "iconX")
     }
 }
-BringCompressionWindowToFront() {
-    static compressionTitles := ["Compressing..."]
-    for title in compressionTitles {
-        if (hwnd := WinExist(title " ahk_class #32770")) {
-            WinActivate(hwnd)
-            return
-        }
-    }
-}
+
+;:: UNCOMMENT TO ENABLE TOGGLE HIDDEN FILES HOTKEY ::
+; F1:: ToggleHiddenFiles()
+
+;:: UNCOMMENT TO ENABLE CREATE ARCHIVE HOTKEY ::
+; ^+z:: CreateArchiveOfSelected()
 
 
 #HotIf  ; RESET HOTKEY CONDITION
 
 
-;######################################## ADD/REMAP SHORTCUTS ########################################
-
-; DISABLE THE DEFAULT BEHAVIORS
-; !Tab::Return
-
-; REMAP SHORTCUTS
-^Tab:: SendInput("!{Tab}")
-
 
 
 ;######################################## MORE KEYBOARD COMBINATIONS ########################################
+
 
 <^>!t:: SendInput "™"
 <^>!c:: SendInput "©"
@@ -479,6 +488,8 @@ BringCompressionWindowToFront() {
 !+<:: SendInput "┃"
 
 
+
+
 ;######################### REPLACE A STRING FOLLOWED BY A PUNCTUATION WITH ANOTHER STRING #########################
 
 ;########## SPECIAL STRING CHECKS ##########
@@ -486,36 +497,40 @@ BringCompressionWindowToFront() {
 ;  :*:  for instant replacement (no need to press space, enter, etc.)
 ;  :b0: the hot string only triggers if it's not part of another word
 
+
 ;########## DATE AND TIME ##########
-::@#::{
+
+::@#:: {
     Send(FormatTime(, "yyyy-MM-dd HH:mm:ss"))
 }
-::@##::{
+::@##:: {
     Send(DateDiff(A_NowUTC, "19700101000000", "Seconds"))
 }
-::date#::{
+::date#:: {
     Send(FormatTime(, "dd.MM.yyyy"))
 }
-::date##::{
+::date##:: {
     Send(StrReplace(FormatTime(, "yyyy MM dd"), " ", ""))
 }
-::time#::{
+::time#:: {
     Send(FormatTime(, "HH:mm"))
 }
-::time##::{
+::time##:: {
     Send(FormatTime(, "HH:mm:ss"))
 }
-:*:year#::{
+:*:year#:: {
     Send(FormatTime(, "yyyy"))
 }
-:*:month#::{
+:*:month#:: {
     Send(FormatTime(, "MMMM"))
 }
-:*:day#::{
+:*:day#:: {
     Send(FormatTime(, "dddd"))
 }
 
+
 ;########## LONGER STRINGS ##########
+
 ; EMAIL SHORTCUTS
 :*:@@m::email@example.com
 
@@ -523,12 +538,15 @@ BringCompressionWindowToFront() {
 :*C:FL#::Firstname Lastname
 :*C:fl#::firstname.lastname
 
+
 ;########## SPECIAL UNICODE ##########
+
 ; MATHEMATICAL SYMBOLS
-::=#::≠
-:*:==#::≈
+:*:!=#::≠
 :*:=>#::⇒
 :*:<=#::⇐
+:*:~#::≈
+:*:~=#::≈
 :*:%#::‰
 :*:%%#::‱
 :*::#::÷
@@ -629,12 +647,12 @@ BringCompressionWindowToFront() {
 :*:greaterequal#::≥
 
 ; LEFT AND RIGHT ARROWS
-::->#::→
+::->#::⭢
 ::->##::⇾
-::->###::➜
-::->####::➞
-::<-#::←
+::->###::⇢
+::<-#::⭠
 ::<-##::⇽
+::<-###::⇠
 
 ::>#::❯
 ::>##::▶
@@ -663,7 +681,7 @@ BringCompressionWindowToFront() {
 ::top->::🔝
 
 ; LINE DRAWING SYMBOLS
-::=##::╣║╗╝╚╔╩╦╠═╬
+:*:=#::╣║╗╝╚╔╩╦╠═╬
 ::-#::│╰╮─╯╭
 ::-##::│┤└┐┴┬├─┼┘┌
 ::-###::┃┫┗┓┻┳┣━╋┛┏
@@ -684,18 +702,22 @@ BringCompressionWindowToFront() {
 :*?:fail#::⨯
 :*?:cross#::⨯
 
+
 ;########## EMOJIS ##########
+
 ; FEELINGS / EMOTIONS
 :*:smile#::😊
+:*:smiling#::😊
 :*:happy#::😊
 :*:cheerful#::😊
 :*:laugh#::😄
 :*:laughing#::😄
-:*:haha#::😄
+:*:xd#::😆
 :*:lol#::😂
 :*:joy#::😂
 :*:rofl#::😂
-:*:xd#::😂
+:*:haha#::🤣
+:*:funny#::🤣
 :*:wink#::😉
 :*:flirt#::😉
 :*:joke#::🙃
@@ -812,6 +834,7 @@ BringCompressionWindowToFront() {
 :*:moai#::🗿
 :*:stone_face#::🗿
 :*:bruh#::🗿
+
 ; GESTURES
 :*:thumbsup#::👍
 :*:like#::👍
@@ -857,6 +880,7 @@ BringCompressionWindowToFront() {
 :*:facepalm#::🤦
 :*:smh#::🤦
 :*:doh#::🤦
+
 ; TECH & DEVELOPER
 :*:keyboard#::⌨️
 :*:type#::⌨️
@@ -1004,6 +1028,7 @@ BringCompressionWindowToFront() {
 :*:security#::🛡️
 :*:protect#::🛡️
 :*:antivirus#::🛡️
+
 ; DESIGN & CREATIVE
 :*:palette#::🎨
 :*:colors#::🎨
@@ -1032,6 +1057,7 @@ BringCompressionWindowToFront() {
 :*:layers#::🗂️
 :*:stack#::🗂️
 :*:arrange#::🗂️
+
 ; ANIMALS
 :*:bug#::🪲
 :*:debug#::🪲
@@ -1076,6 +1102,7 @@ BringCompressionWindowToFront() {
 :*:container#::🐳
 :*:spider#::🕷️
 :*:arachnid#::🕷️
+
 ; SYMBOLS & MARKS
 :*:checkmark#::✅
 :*:correct#::✅
@@ -1123,6 +1150,7 @@ BringCompressionWindowToFront() {
 :*:percent#::💯
 :*:score#::💯
 :*:nice#::💯
+
 ; OBJECTS & TOOLS
 :*:phone#::📱
 :*:mobile#::📱
@@ -1164,6 +1192,7 @@ BringCompressionWindowToFront() {
 :*:cd#::💿
 :*:dvd#::💿
 :*:disc#::💿
+
 ; COMMUNICATION & SOCIAL
 :*:chat#::💬
 :*:speech#::💬
@@ -1186,6 +1215,7 @@ BringCompressionWindowToFront() {
 :*:outbox#::📤
 :*:sent#::📤
 :*:sending#::📤
+
 ; HEARTS & LOVE
 :*:red_heart#::❤️
 :*:heart#::❤️
@@ -1221,6 +1251,7 @@ BringCompressionWindowToFront() {
 :*:passion#::❤️‍🔥
 :*:desire#::❤️‍🔥
 :*:hearts#::💕
+
 ; WEATHER & NATURE
 :*:sun#::☀️
 :*:sunshine#::☀️
@@ -1266,6 +1297,7 @@ BringCompressionWindowToFront() {
 :*:ice_cube#::🧊
 :*:freeze#::🧊
 :*:frozen#::🧊
+
 ; SPACE
 :*:space#::🌌
 :*:galaxy#::🌌
@@ -1285,6 +1317,7 @@ BringCompressionWindowToFront() {
 :*:new_moon#::🌑
 :*:satellite#::🛰️
 :*:ufo#::🛸️
+
 ; TIME MANAGEMENT
 :*:hour#::🕐
 :*:clock#::🕐
@@ -1300,6 +1333,7 @@ BringCompressionWindowToFront() {
 :*:stopwatch#::⏱️
 :*:measure#::⏱️
 :*:timing#::⏱️
+
 ; ACHIEVEMENTS
 :*:trophy#::🏆
 :*:win#::🏆

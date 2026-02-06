@@ -699,8 +699,8 @@ CreateArchiveOfSelected() {
 ; GENERAL SPECIAL CHARACTERS
 :*?:pass#::✓
 :*?:check#::✓
-:*?:fail#::⨯
-:*?:cross#::⨯
+:*?:fail#::✗
+:*?:cross#::✗
 
 
 ;########## EMOJIS ##########

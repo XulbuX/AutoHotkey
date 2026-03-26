@@ -647,12 +647,14 @@ CreateArchiveOfSelected() {
 :*:greaterequal#::≥
 
 ; LEFT AND RIGHT ARROWS
-::->#::⭢
-::->##::⇾
-::->###::⇢
-::<-#::⭠
-::<-##::⇽
-::<-###::⇠
+::->#::→
+::->##::⭢
+::->###::⇾
+::->####::⇢
+::<-#::←
+::<-##::⭠
+::<-###::⇽
+::<-####::⇠
 
 ::>#::❯
 ::>##::▶
@@ -1051,6 +1053,10 @@ CreateArchiveOfSelected() {
 :*:video#::🎥
 :*:film#::🎥
 :*:movie#::🎥
+:*:slate#::🎬
+:*:clapper#::🎬
+:*:clapboard#::🎬
+:*:clapperboard#::🎬
 :*:sparkles#::✨
 :*:magic#::✨
 :*:shine#::✨

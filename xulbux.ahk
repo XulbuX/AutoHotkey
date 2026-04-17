@@ -805,6 +805,11 @@ CreateArchiveOfSelected() {
 :*:outrage#::🤬
 :*:outraged#::🤬
 :*:fury#::🤬
+:*:devil#::😈
+:*:imp#::😈
+:*:evil#::😈
+:*:mad_devil#::👿
+:*:angry_devil#::👿
 :*:tired#::😫
 :*:exhausted#::😫
 :*:weary#::😫

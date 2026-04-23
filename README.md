@@ -1,6 +1,6 @@
-# AutoHotkey
+# Auto Hotkey
 This repository contains AutoHotkey (*AHK*) scripts, which do a lot of really cool and very useful things.
-For more information on AutoHotkey, how to use it and how to write AHK scripts, check out the [AutoHotkey documentation](https://www.autohotkey.com/docs/v2).
+For more information on AutoHotkey, how to use it and how to write AHK scripts, check out the [**AutoHotkey documentation**](https://www.autohotkey.com/docs/v2).
 
 > [!NOTE]
 > 1. Most of the scripts in this repo only work for Windows, still the functionalities, that don't rely on Windows specific things, should work on other OSes too.
@@ -16,7 +16,7 @@ For more information on AutoHotkey, how to use it and how to write AHK scripts, 
 
 ## How to install AutoHotkey?
 
-For downloading and installing the AutoHotkey program, just go to [their website](https://www.autohotkey.com) and click on the `Download` button.
+For downloading and installing the AutoHotkey program, just go to [**their website**](https://www.autohotkey.com) and click on the `Download` button.
 For the scripts in this repo, only `v2.0` is used, so click to download that. If downloaded, run the installer.
 
 After the installation has finished, you should be good to go and can execute the downloaded AHK scripts.
@@ -30,8 +30,8 @@ If you want the scripts to start automatically on PC startup, follow the next st
 ### Windows
 
 1. Create your AHK file.
-2. Press `Win + R`, type `shell:common startup`, and press `Enter`.
-3. Place a shortcut of your AHK file, or the script file itself, in this folder.
+2. Open the startup folder by pressing `Win + R`, entering `shell:common startup`, before pressing `Enter`.
+3. Place a shortcut to your AHK file, or the script file itself, in this startup folder.
 
 
 ### macOS

@@ -202,20 +202,6 @@ NormalizeSelectedText(separatorChar, keepCase := false, allowDots := false) {
     NormalizeSelectedText("-", false, false)
 }
 
-; OPEN SELECTED TEXT AS WEBSITE/URL
-^+s:: {
-    selectedText := GetSelectedText()
-    if (selectedText)
-        Run(selectedText)
-}
-
-; WEB-SEARCH SELECTED TEXT
-^!s:: {
-    selectedText := GetSelectedText()
-    if (selectedText)
-        Run("https://www.google.com/search?q=" . selectedText)
-}
-
 
 
 
